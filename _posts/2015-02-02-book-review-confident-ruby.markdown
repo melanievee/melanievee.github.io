@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Book Review: Confident Ruby"
-subtitle:   "Every Rubyist should have this book on their reference shelf."
+subtitle:   "Every Rubyist should have this book on his/her reference shelf."
 date:       2015-02-02 12:00:00
 author:     "Melanie VanderLugt"
 header-img: "img/cat.jpg"
