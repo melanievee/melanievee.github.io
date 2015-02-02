@@ -5,9 +5,92 @@
     <description></description>
     <link>http://www.melanievanderlugt.com/</link>
     <atom:link href="http://www.melanievanderlugt.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 29 Jan 2015 19:40:32 +0100</pubDate>
-    <lastBuildDate>Thu, 29 Jan 2015 19:40:32 +0100</lastBuildDate>
+    <pubDate>Mon, 02 Feb 2015 22:07:26 +0100</pubDate>
+    <lastBuildDate>Mon, 02 Feb 2015 22:07:26 +0100</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>Book Review: Confident Ruby</title>
+        <description>&lt;p&gt;I love the idea that a tech talk can evolve into a full fledged book, which is exactly how Avdi Grimm’s book, Confident Ruby, came about. According to the preface, Avdi gave his first tech talk, called “Confident Code”, to a room full of Rubyists in Baltimore in 2010. He goes on to say that his Confident Code talk receives the most positive feedback of any of his talks, and I think that’s for very good reason. The ideas that are laid out in this book are awesome.&lt;/p&gt;
+
+&lt;p&gt;Before reading Confident Ruby, I hadn’t thought about categorizing code as timid or confident. We’ve all probably accused code of being poorly organized, convoluted, maybe even overly clever, but I previously only thought of timidity and confidence as people-oriented traits. It’s eye opening to think of code as being timid or confident. Is my code shy? Am I checking for nil all over the place? Is my code confidently laying out the story I want to tell? These are all questions Avdi’s book can help you answer about your own code. (The coding patterns in Confident Ruby can help you fix timidity, too!)&lt;/p&gt;
+
+&lt;p&gt;Confident Ruby (published in 2013), is a must-read for any Ruby newbie. In fact, I enjoyed reading it so much that it might just join my read-again-every-year book list. It definitely earned itself a permanent home on my Kindle.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-3-concepts-from-confident-ruby-that-i-liked-the-most&quot;&gt;The 3 Concepts from Confident Ruby That I Liked the Most&lt;/h2&gt;
+
+&lt;h3 id=&quot;your-code-should-tell-a-story&quot;&gt;#1: Your Code Should Tell a Story&lt;/h3&gt;
+
+&lt;p&gt;Choose your own adventure books were a fun part of childhood, but there’s no place for them in code today. Trying to read spaghetti code is a little like trying to read a choose-your-own-adventure book from cover to cover. It’s confusing, there are too many things to keep track of, and you seem to jump backwards and forwards in time. There is no compelling narrative and a clear story doesn’t emerge.&lt;/p&gt;
+
+&lt;p&gt;According to Confident Ruby, your code should have a compelling narrative; it should tell a clear story. In order to tell that story confidently and clearly, the book suggests organizing methods into Four Parts, in this order:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Collecting Input &lt;/li&gt;
+  &lt;li&gt;Performing Work&lt;/li&gt;
+  &lt;li&gt;Delivering Output&lt;/li&gt;
+  &lt;li&gt;Handling Failures&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Following this rule of thumb helps organize code into clearly defined chunks with clearly defined purposes. It leaves failure handling until the end of the method so it doesn’t distract from the method’s main purpose. I recommend checking out the companion video that comes with Confident Ruby to watch Avdi put this theory to work in some real-life out-there-in-the-wild code.&lt;/p&gt;
+
+&lt;h3 id=&quot;use-fetch-instead-of-nil-checking&quot;&gt;#2: Use Fetch instead of nil checking&lt;/h3&gt;
+
+&lt;p&gt;One pattern presented in Confident Ruby that I’ll immediately start utilizing in my projects is the use of #fetch to assert the presence of Hash keys. If you have a method that takes a hash as input, and some of your hash elements are non-optional, this is a great pattern to latch onto. Strip unnecessary “if” statements out of your method that test for the presence of the keys and instead call fetch.&lt;/p&gt;
+
+&lt;p&gt;Instead of:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;my_first_method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myhash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;required_input&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myhash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:required_input&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;required_input&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;ArgumentError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;required input was not supplied!&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You can simply use this:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;my_better_method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myhash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;required_input&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myhash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:required_input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Clear. Concise. Fabulous. It’s important to understand that the #fetch method is checking for the presence of the KEY; it has nothing to do with the actual value stored with that key. In the first method, it’s possible that if our required_input key holds the value “false”, we could erroneously raise an exception claiming that we weren’t provided with the right inputs. In the second method, if the value for the required_input key is FALSE, it’s still considered an acceptable input. As Avdi so eloquently puts it, by using #fetch, we are “differentiating between missing keys and falsey values”.&lt;/p&gt;
+
+&lt;p&gt;But what is the coolest thing about using the #fetch method? You can send in a block that will be evaluated when the key you’re attempting to fetch is missing! Using this feature, it’s possible to add more descriptive messages to your exceptions, or raise different types of exceptions altogether.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;my_better_method&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myhash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;required_input&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;myhash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:required_input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;KeyError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;The required_input was not supplied!&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Awesome!&lt;/p&gt;
+
+&lt;h3 id=&quot;take-advantage-of-rubys-built-in-conversion-functions&quot;&gt;#3: Take advantage of Ruby’s Built-in Conversion Functions&lt;/h3&gt;
+
+&lt;p&gt;Most Ruby Devs are familiar with conversion methods like #to_i and #to_a. Until I read Confident Ruby, I wasn’t aware that Ruby has a different set of capitalized conversion functions: Integer(), Array(), Float(), String(), Rational(), and Complex().&lt;/p&gt;
+
+&lt;p&gt;In the book, Avdi explains that these capitalized conversion functions are great for converting inputs into your desired data type, but here’s the kicker - it only successfully converts values when there is a sensible way of doing it. As an example, you could look at this case:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; 2.1.2 :001 &amp;gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;this is definitely a string, not a number&amp;quot;&lt;/span&gt;.to_i
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; 2.1.2 :002 &amp;gt; Integer&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;this is definitely a string, not a number&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; ArgumentError: invalid value &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; Integer&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;: &lt;span class=&quot;s2&quot;&gt;&amp;quot;this is definitely a string, not a number&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Using #to_i converts our string into zero. That doesn’t make a whole lot of sense to me, and I wouldn’t want to do that without knowing exactly why I’m doign it.&lt;/p&gt;
+
+&lt;p&gt;In most cases, it just doesn’t make sense to convert a string into an integer. If you use #to_i instead of the more strict Integer conversion function, you could inadvertently be letting nonsensical values into your application. It can be a good idea to just alert the user with an Error when your program receives something it doesn’t make sense to convert.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-verdict-a-must-read&quot;&gt;The Verdict: A Must Read&lt;/h3&gt;
+&lt;p&gt;If you’re a Rubyist and haven’t had a look at this book yet, I highly recommend giving it a read. It’s quick to get through, easy to absorb, and definitely deserves a spot on your shelf of code references. Plus, it contains emergency kittens. Perfect for times when those coding examples become a little bit too intense and you just need a chuckle.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 02 Feb 2015 13:00:00 +0100</pubDate>
+        <link>http://www.melanievanderlugt.com/2015/02/02/book-review-confident-ruby/</link>
+        <guid isPermaLink="true">http://www.melanievanderlugt.com/2015/02/02/book-review-confident-ruby/</guid>
+        
+        <category>book-review</category>
+        
+        
+      </item>
     
       <item>
         <title>Oh Hey There, World.</title>

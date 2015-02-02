@@ -127,6 +127,9 @@ hr.small {
     transform: translate3d(0, 100%, 0);
   }
 }
+.transparency {
+  background-color: rgba(000,000,000,.5);
+}
 .intro-header {
   background: no-repeat center center;
   background-color: #808080;

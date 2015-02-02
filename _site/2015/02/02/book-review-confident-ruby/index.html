@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+    <title>Book Review: Confident Ruby - Melanie VanderLugt</title>
+
+    <link rel="canonical" href="http://www.melanievanderlugt.com/2015/02/02/book-review-confident-ruby/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Melanie VanderLugt</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                
+                <li>
+                    <a href="/about/">About</a>
+                </li>
+                
+                <li>
+                    <a href="/api_playground/">API Playground</a>
+                </li>
+                
+                <li>
+                    <a href="/book_reviews/">Book Reviews</a>
+                </li>
+                
+                <li>
+                    <a href="/side_projects/">Projects</a>
+                </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/img/cat.jpg')">
+<div class="transparency">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Book Review: Confident Ruby</h1>
+                    
+                    <h2 class="subheading">Every Rubyist should have this book on their reference shelf.</h2>
+                    
+                    <span class="meta">Posted by Melanie VanderLugt on February 2, 2015</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+				<p>I love the idea that a tech talk can evolve into a full fledged book, which is exactly how Avdi Grimm’s book, Confident Ruby, came about. According to the preface, Avdi gave his first tech talk, called “Confident Code”, to a room full of Rubyists in Baltimore in 2010. He goes on to say that his Confident Code talk receives the most positive feedback of any of his talks, and I think that’s for very good reason. The ideas that are laid out in this book are awesome.</p>
+
+<p>Before reading Confident Ruby, I hadn’t thought about categorizing code as timid or confident. We’ve all probably accused code of being poorly organized, convoluted, maybe even overly clever, but I previously only thought of timidity and confidence as people-oriented traits. It’s eye opening to think of code as being timid or confident. Is my code shy? Am I checking for nil all over the place? Is my code confidently laying out the story I want to tell? These are all questions Avdi’s book can help you answer about your own code. (The coding patterns in Confident Ruby can help you fix timidity, too!)</p>
+
+<p>Confident Ruby (published in 2013), is a must-read for any Ruby newbie. In fact, I enjoyed reading it so much that it might just join my read-again-every-year book list. It definitely earned itself a permanent home on my Kindle.</p>
+
+<h2 id="the-3-concepts-from-confident-ruby-that-i-liked-the-most">The 3 Concepts from Confident Ruby That I Liked the Most</h2>
+
+<h3 id="your-code-should-tell-a-story">#1: Your Code Should Tell a Story</h3>
+
+<p>Choose your own adventure books were a fun part of childhood, but there’s no place for them in code today. Trying to read spaghetti code is a little like trying to read a choose-your-own-adventure book from cover to cover. It’s confusing, there are too many things to keep track of, and you seem to jump backwards and forwards in time. There is no compelling narrative and a clear story doesn’t emerge.</p>
+
+<p>According to Confident Ruby, your code should have a compelling narrative; it should tell a clear story. In order to tell that story confidently and clearly, the book suggests organizing methods into Four Parts, in this order:</p>
+
+<ul>
+  <li>Collecting Input </li>
+  <li>Performing Work</li>
+  <li>Delivering Output</li>
+  <li>Handling Failures</li>
+</ul>
+
+<p>Following this rule of thumb helps organize code into clearly defined chunks with clearly defined purposes. It leaves failure handling until the end of the method so it doesn’t distract from the method’s main purpose. I recommend checking out the companion video that comes with Confident Ruby to watch Avdi put this theory to work in some real-life out-there-in-the-wild code.</p>
+
+<h3 id="use-fetch-instead-of-nil-checking">#2: Use Fetch instead of nil checking</h3>
+
+<p>One pattern presented in Confident Ruby that I’ll immediately start utilizing in my projects is the use of #fetch to assert the presence of Hash keys. If you have a method that takes a hash as input, and some of your hash elements are non-optional, this is a great pattern to latch onto. Strip unnecessary “if” statements out of your method that test for the presence of the keys and instead call fetch.</p>
+
+<p>Instead of:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="lineno">1</span> <span class="k">def</span> <span class="nf">my_first_method</span><span class="p">(</span><span class="n">myhash</span><span class="p">)</span>
+<span class="lineno">2</span>   <span class="n">required_input</span> <span class="o">=</span> <span class="n">myhash</span><span class="o">[</span><span class="ss">:required_input</span><span class="o">]</span>
+<span class="lineno">3</span>   <span class="k">unless</span> <span class="n">required_input</span>
+<span class="lineno">4</span>     <span class="k">raise</span> <span class="no">ArgumentError</span><span class="p">,</span> <span class="s1">&#39;required input was not supplied!&#39;</span>
+<span class="lineno">5</span>   <span class="k">end</span>
+<span class="lineno">6</span> <span class="k">end</span></code></pre></div>
+
+<p>You can simply use this:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="lineno">1</span> <span class="k">def</span> <span class="nf">my_better_method</span><span class="p">(</span><span class="n">myhash</span><span class="p">)</span>
+<span class="lineno">2</span>   <span class="n">required_input</span> <span class="o">=</span> <span class="n">myhash</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="ss">:required_input</span><span class="p">)</span>
+<span class="lineno">3</span> <span class="k">end</span></code></pre></div>
+
+<p>Clear. Concise. Fabulous. It’s important to understand that the #fetch method is checking for the presence of the KEY; it has nothing to do with the actual value stored with that key. In the first method, it’s possible that if our required_input key holds the value “false”, we could erroneously raise an exception claiming that we weren’t provided with the right inputs. In the second method, if the value for the required_input key is FALSE, it’s still considered an acceptable input. As Avdi so eloquently puts it, by using #fetch, we are “differentiating between missing keys and falsey values”.</p>
+
+<p>But what is the coolest thing about using the #fetch method? You can send in a block that will be evaluated when the key you’re attempting to fetch is missing! Using this feature, it’s possible to add more descriptive messages to your exceptions, or raise different types of exceptions altogether.</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="lineno">1</span> <span class="k">def</span> <span class="nf">my_better_method</span><span class="p">(</span><span class="n">myhash</span><span class="p">)</span>
+<span class="lineno">2</span>   <span class="n">required_input</span> <span class="o">=</span> <span class="n">myhash</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="ss">:required_input</span><span class="p">)</span> <span class="k">do</span> 
+<span class="lineno">3</span>     <span class="k">raise</span> <span class="no">KeyError</span><span class="p">,</span> <span class="s2">&quot;The required_input was not supplied!&quot;</span>
+<span class="lineno">4</span>   <span class="k">end</span>
+<span class="lineno">5</span> <span class="k">end</span></code></pre></div>
+
+<p>Awesome!</p>
+
+<h3 id="take-advantage-of-rubys-built-in-conversion-functions">#3: Take advantage of Ruby’s Built-in Conversion Functions</h3>
+
+<p>Most Ruby Devs are familiar with conversion methods like #to_i and #to_a. Until I read Confident Ruby, I wasn’t aware that Ruby has a different set of capitalized conversion functions: Integer(), Array(), Float(), String(), Rational(), and Complex().</p>
+
+<p>In the book, Avdi explains that these capitalized conversion functions are great for converting inputs into your desired data type, but here’s the kicker - it only successfully converts values when there is a sensible way of doing it. As an example, you could look at this case:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="lineno">1</span> 2.1.2 :001 &gt; <span class="s2">&quot;this is definitely a string, not a number&quot;</span>.to_i
+<span class="lineno">2</span>  <span class="o">=</span>&gt; <span class="m">0</span> 
+<span class="lineno">3</span> 2.1.2 :002 &gt; Integer<span class="o">(</span><span class="s2">&quot;this is definitely a string, not a number&quot;</span><span class="o">)</span>
+<span class="lineno">4</span> ArgumentError: invalid value <span class="k">for</span> Integer<span class="o">()</span>: <span class="s2">&quot;this is definitely a string, not a number&quot;</span></code></pre></div>
+
+<p>Using #to_i converts our string into zero. That doesn’t make a whole lot of sense to me, and I wouldn’t want to do that without knowing exactly why I’m doign it.</p>
+
+<p>In most cases, it just doesn’t make sense to convert a string into an integer. If you use #to_i instead of the more strict Integer conversion function, you could inadvertently be letting nonsensical values into your application. It can be a good idea to just alert the user with an Error when your program receives something it doesn’t make sense to convert.</p>
+
+<h3 id="the-verdict-a-must-read">The Verdict: A Must Read</h3>
+<p>If you’re a Rubyist and haven’t had a look at this book yet, I highly recommend giving it a read. It’s quick to get through, easy to absorb, and definitely deserves a spot on your shelf of code references. Plus, it contains emergency kittens. Perfect for times when those coding examples become a little bit too intense and you just need a chuckle.</p>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2015/01/20/a-blog-is-born/" data-toggle="tooltip" data-placement="top" title="Oh Hey There, World.">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="https://twitter.com/melanie_vee">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/melanie.kreie">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/melanievee">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="mailto:melanie.vanderlugt@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; Melanie VanderLugt 2015</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js "></script>
+
+
+</body>
+
+</html>

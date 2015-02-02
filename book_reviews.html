@@ -2,7 +2,23 @@
 layout: page
 title: "Book Reviews"
 description: "Reading Is Fun."
-header-img: "img/contact-bg.jpg"
+header-img: "img/book.jpg"
 ---
 
-<p>I love reading everything from novels to software books to travel guides. I'll post reviews of my favorite (and least favorite) books here.</p>
+<p>I love reading everything from novels to software books to travel guides. I'll post reviews of my favorite books here.</p>
+
+{% for post in site.tags.book-review %}
+<div class="post-preview">
+    <a href="{{ post.url | prepend: site.baseurl }}">
+        <h2 class="post-title">            {{ post.title }}
+        </h2>
+        {% if post.subtitle %}
+        <h3 class="post-subtitle">
+            {{ post.subtitle }}
+        </h3>
+        {% endif %}
+    </a>
+    <p class="post-meta">Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}</p>
+</div>
+<hr>
+{% endfor %}
