@@ -5,9 +5,142 @@
     <description></description>
     <link>http://www.melanievanderlugt.com/</link>
     <atom:link href="http://www.melanievanderlugt.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 23 Feb 2015 12:57:56 +0100</pubDate>
-    <lastBuildDate>Mon, 23 Feb 2015 12:57:56 +0100</lastBuildDate>
+    <pubDate>Thu, 12 Mar 2015 14:49:23 +0100</pubDate>
+    <lastBuildDate>Thu, 12 Mar 2015 14:49:23 +0100</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>Book Review: Exceptional Ruby</title>
+        <description>&lt;p&gt;Exceptional Ruby (published in 2011) was my second Avdi Grimm book in the last couple of months. This book is a great way to dip your toes into the exception handling pond without getting scared away. I’m a sucker for books that start off with a coding metaphor, and Avdi didn’t disappoint. In the intro, he compares exception handling to the toys and clothes a kid stuffs in his closet right before Mom comes to inspect his room. Like a kid cleaning his room, a lot of programmers leave exception handling until last minute, more of an “oh crap!” afterthought than an important well-planned piece of your program. &lt;/p&gt;
+
+&lt;p&gt;Failure handling is the underdog that finally gets its time to shine in Exceptional Ruby. Avdi provides example after example of great ways to raise and handle exceptions, many of which I never would’ve thought up on my own out of the blue. If you read this book and don’t feel exceptionally enlightened (pun totally intended), you must be an exceptional genius already. (Is it bad form to use the same pun twice in one sentence?)&lt;/p&gt;
+
+&lt;h2 id=&quot;a-few-quick-tidbits-i-never-want-to-forget&quot;&gt;A Few Quick Tidbits I Never Want to Forget&lt;/h2&gt;
+
+&lt;p&gt;I’ll let you in on a secret. I mostly write book reviews for my own personal benefit. Sometimes there’s just not enough space in my head to store the info I want to keep in there. Blog posts are an extension of my brain that I can come back and find again later. In Exceptional Ruby, Avdi touched on a few things I know I’ll want to remember:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;In Ruby, &lt;code&gt;raise&lt;/code&gt; and &lt;code&gt;fail&lt;/code&gt; are synonyms. Neither is a Ruby keyword. Rather, they’re Kernel methods, so they &lt;strong&gt;can&lt;/strong&gt; be overriden!&lt;/li&gt;
+  &lt;li&gt;The currently active exception is always stored in the global variable &lt;code&gt;$!&lt;/code&gt;. If there is no active exception, &lt;code&gt;$!&lt;/code&gt; will be nil.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The &lt;code&gt;begin&lt;/code&gt; keyword is considered by some to be a code smell in Ruby. Instead of peppering your code with lots of &lt;code&gt;begin&lt;/code&gt;, &lt;code&gt;rescue&lt;/code&gt;, and &lt;code&gt;end&lt;/code&gt; blocks, take advantage of Ruby’s implicit begin blocks:&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; def foo
+   # main logic
+ rescue 
+   # handle failures here. No explicit begin or end necessary, hooray!
+ end
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;A bare &lt;code&gt;rescue&lt;/code&gt; will catch only &lt;code&gt;StandardError&lt;/code&gt; and any derived classes. It will not catch these puppies:
+    &lt;ul&gt;
+      &lt;li&gt;&lt;code&gt;NoMemoryError&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;LoadError&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;NotImplementedError&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;SignalException&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;Interrupt&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code&gt;ScriptError&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;exceptional-ideas-from-exceptional-ruby&quot;&gt;Exceptional Ideas from Exceptional Ruby&lt;/h2&gt;
+
+&lt;h3 id=&quot;nested-exceptions&quot;&gt;Nested Exceptions&lt;/h3&gt;
+&lt;p&gt;In Ruby, it’s possible to raise a new exception while we’re in the process of handling a previously incurred exception. When this occurs, the original exception is thrown away, completely gone, &lt;em&gt;unless&lt;/em&gt; you utilize the idea of Nested Exceptions that Avdi introduces in his book.&lt;/p&gt;
+
+&lt;p&gt;Nested Exceptions hold a reference to the original exception so that it isn’t thrown away. Here’s how you’d do it: &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyError&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;StandardError&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;kp&quot;&gt;attr_reader&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:original&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;original&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;vg&quot;&gt;$!&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;super&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt;     &lt;span class=&quot;vi&quot;&gt;@original&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;original&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Error A&amp;quot;&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;rescue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;MyError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Error B&amp;quot;&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;rescue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt;   &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Current failure: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inspect&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;17&lt;/span&gt;   &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Original failure: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;original&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inspect&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;18&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Running this code produces the output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Current failure: #&amp;lt;MyError: Error B&amp;gt;
+Original failure: #&amp;lt;RuntimeError: Error A&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;What’s happening here? We created our own error class called &lt;code&gt;MyError&lt;/code&gt; that stores any currently active exception in &lt;code&gt;original&lt;/code&gt; and sends &lt;code&gt;msg&lt;/code&gt; up to its parent &lt;code&gt;StandardError&lt;/code&gt; object via the call to &lt;code&gt;super&lt;/code&gt;. As we’d expect, our current failure is set to Error B (our most recent failure), which is of type &lt;code&gt;MyError&lt;/code&gt;. The key thing to note in this example is that we still have access to Error A &lt;em&gt;through&lt;/em&gt; Error B by calling &lt;code&gt;error.original&lt;/code&gt;. (Note that Error A is a &lt;code&gt;RuntimeError&lt;/code&gt; because this is the default exception type when you use just a bare &lt;code&gt;raise&lt;/code&gt;.)&lt;/p&gt;
+
+&lt;h3 id=&quot;code-bulkheads&quot;&gt;Code Bulkheads&lt;/h3&gt;
+&lt;p&gt;Nobody wants their code to sink like the Titanic. In ship-speak, bulkheads are placed between ship compartments so that a leak in one compartment will not spread to others. This enables a ship to stay afloat even if one of its compartments is completely flooded. The Titanic had inadequate bulkheads, whith turned out to be a devastating design flaw.&lt;/p&gt;
+
+&lt;p&gt;Exceptional Ruby discusses the concept of erecting Bulkheads in your code to stop cascading failures. This isolates parts of your codes from others so that a failure in one area doesn’t cause other parts of the ship to go down. &lt;/p&gt;
+
+&lt;p&gt;It’s a good idea to place bulkheads between your app and External Services and External processes. One easy way &lt;em&gt;Exceptional Ruby&lt;/em&gt; shows us how to do this is to rescue exceptions and write them to a log instead of bringing down the program:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;begin&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;# External Web Request&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;HTTParty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;http://www.reddit.com/r/pics&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;c1&quot;&gt;# Everyone loves a good HTTParty&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;rescue&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;External Web Request encountered an Exception.&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;7&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;8&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;logger&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;backtrace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;9&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;circuit-breakers&quot;&gt;Circuit Breakers&lt;/h3&gt;
+&lt;p&gt;Another way to handle failures is using the Circuit Breaker pattern, which Avdi references from Michael Nygard’s book &lt;em&gt;Release It!&lt;/em&gt; Circuit breakers are essentially a way of counting failures in particular areas of your App. &lt;/p&gt;
+
+&lt;p&gt;When a threshold is met for one component of your program, a “circuit breaker” opens and that component isn’t permitted to operate. After a period of time, the circuit breaker enters a half-open state, where one failure can cause it to open again. Normal operation is the “closed” state. Check out Will Sargent’s &lt;a href=&quot;https://github.com/wsargent/circuit_breaker&quot;&gt;Ruby Implementation&lt;/a&gt;  of this pattern on Github.&lt;/p&gt;
+
+&lt;h3 id=&quot;allow-for-user-injected-failure-policies&quot;&gt;Allow for User-injected Failure Policies&lt;/h3&gt;
+&lt;p&gt;I &lt;em&gt;love&lt;/em&gt; this exceptional method of handling exceptions. (There’s that pesky pun again…) It’s as simple as this - defer to the method caller!&lt;/p&gt;
+
+&lt;p&gt;Avdi refers to this as “caller-supplied fallback strategy”. In my &lt;a href=&quot;http://www.melanievanderlugt.com/2015/02/02/book-review-confident-ruby/&quot;&gt;previous book review about Confident Ruby&lt;/a&gt;, I raved about using the Hash fetch method to assert the presence of hash keys. &lt;/p&gt;
+
+&lt;p&gt;In &lt;em&gt;Exceptional Ruby&lt;/em&gt;, I learned that you can pass a block to the fetch method that tells it how to respond to failures! This gives the caller the power to dictate the policy for missing keys, instead of having a policy foisted upon them.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fetch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:required_key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;ZOMG that required key doesn&amp;#39;t exist!&amp;quot;&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You can write your own methods so that you let callers determine what to do if something goes awry. Here’s a super simple example to show you how a method can be structured if you want users to provide their own way of handling unexpected behavior:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;render_book_details&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;book&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;book&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;book&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;author&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;     &lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;book&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; by &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;book&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;author&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt;     &lt;span class=&quot;k&quot;&gt;yield&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Here, I’ve assumed you have a book object with title and author attributes. If an instance of book doesn’t have either of these attributes, we have a problem. The caller needs to provide a way of handling this problem in the form of a code block. There are a couple ways the caller might handle this.&lt;/p&gt;
+
+&lt;p&gt;Perhaps you want the &lt;code&gt;render_book_details&lt;/code&gt; method to return a default string if the book title and author aren’t present:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;print_book_details&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mybook&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Book title or author not found.&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;You could also raise an exception instead of returning a default string. That’s easy too!&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;print_book_details&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mybook&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Book is missing title or author.&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The user can provide any number of code blocks to handle errors in this situation. What’s truly important is that the power lies with the caller, not with the method author.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 12 Mar 2015 15:45:00 +0100</pubDate>
+        <link>http://www.melanievanderlugt.com/2015/03/12/book-review-exceptional-ruby/</link>
+        <guid isPermaLink="true">http://www.melanievanderlugt.com/2015/03/12/book-review-exceptional-ruby/</guid>
+        
+        <category>book-review</category>
+        
+        
+      </item>
     
       <item>
         <title>Book Review: Growth Hacker Marketing</title>

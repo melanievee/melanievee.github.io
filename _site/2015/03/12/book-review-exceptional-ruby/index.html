@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+    <title>Book Review: Exceptional Ruby - Melanie VanderLugt</title>
+
+    <link rel="canonical" href="http://www.melanievanderlugt.com/2015/03/12/book-review-exceptional-ruby/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Melanie VanderLugt</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                
+                <li>
+                    <a href="/about/">About</a>
+                </li>
+                
+                <li>
+                    <a href="/api_playground/">API Playground</a>
+                </li>
+                
+                <li>
+                    <a href="/book_reviews/">Book Reviews</a>
+                </li>
+                
+                <li>
+                    <a href="/side_projects/">Projects</a>
+                </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/img/tower-of-pisa.jpeg')">
+<div class="transparency">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Book Review: Exceptional Ruby</h1>
+                    
+                    <h2 class="subheading">Another good book by Avdi Grimm.</h2>
+                    
+                    <span class="meta">Posted by Melanie VanderLugt on March 12, 2015</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+				<p>Exceptional Ruby (published in 2011) was my second Avdi Grimm book in the last couple of months. This book is a great way to dip your toes into the exception handling pond without getting scared away. I’m a sucker for books that start off with a coding metaphor, and Avdi didn’t disappoint. In the intro, he compares exception handling to the toys and clothes a kid stuffs in his closet right before Mom comes to inspect his room. Like a kid cleaning his room, a lot of programmers leave exception handling until last minute, more of an “oh crap!” afterthought than an important well-planned piece of your program. </p>
+
+<p>Failure handling is the underdog that finally gets its time to shine in Exceptional Ruby. Avdi provides example after example of great ways to raise and handle exceptions, many of which I never would’ve thought up on my own out of the blue. If you read this book and don’t feel exceptionally enlightened (pun totally intended), you must be an exceptional genius already. (Is it bad form to use the same pun twice in one sentence?)</p>
+
+<h2 id="a-few-quick-tidbits-i-never-want-to-forget">A Few Quick Tidbits I Never Want to Forget</h2>
+
+<p>I’ll let you in on a secret. I mostly write book reviews for my own personal benefit. Sometimes there’s just not enough space in my head to store the info I want to keep in there. Blog posts are an extension of my brain that I can come back and find again later. In Exceptional Ruby, Avdi touched on a few things I know I’ll want to remember:</p>
+
+<ol>
+  <li>In Ruby, <code>raise</code> and <code>fail</code> are synonyms. Neither is a Ruby keyword. Rather, they’re Kernel methods, so they <strong>can</strong> be overriden!</li>
+  <li>The currently active exception is always stored in the global variable <code>$!</code>. If there is no active exception, <code>$!</code> will be nil.</li>
+  <li>
+    <p>The <code>begin</code> keyword is considered by some to be a code smell in Ruby. Instead of peppering your code with lots of <code>begin</code>, <code>rescue</code>, and <code>end</code> blocks, take advantage of Ruby’s implicit begin blocks:</p>
+
+    <pre><code> def foo
+   # main logic
+ rescue 
+   # handle failures here. No explicit begin or end necessary, hooray!
+ end
+</code></pre>
+  </li>
+  <li>A bare <code>rescue</code> will catch only <code>StandardError</code> and any derived classes. It will not catch these puppies:
+    <ul>
+      <li><code>NoMemoryError</code></li>
+      <li><code>LoadError</code></li>
+      <li><code>NotImplementedError</code></li>
+      <li><code>SignalException</code></li>
+      <li><code>Interrupt</code></li>
+      <li><code>ScriptError</code></li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="exceptional-ideas-from-exceptional-ruby">Exceptional Ideas from Exceptional Ruby</h2>
+
+<h3 id="nested-exceptions">Nested Exceptions</h3>
+<p>In Ruby, it’s possible to raise a new exception while we’re in the process of handling a previously incurred exception. When this occurs, the original exception is thrown away, completely gone, <em>unless</em> you utilize the idea of Nested Exceptions that Avdi introduces in his book.</p>
+
+<p>Nested Exceptions hold a reference to the original exception so that it isn’t thrown away. Here’s how you’d do it: </p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="lineno"> 1</span> <span class="k">class</span> <span class="nc">MyError</span> <span class="o">&lt;</span> <span class="no">StandardError</span>
+<span class="lineno"> 2</span>   <span class="kp">attr_reader</span> <span class="ss">:original</span>
+<span class="lineno"> 3</span>   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">original</span><span class="o">=</span><span class="vg">$!</span><span class="p">)</span>
+<span class="lineno"> 4</span>     <span class="k">super</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<span class="lineno"> 5</span>     <span class="vi">@original</span> <span class="o">=</span> <span class="n">original</span><span class="p">;</span> 
+<span class="lineno"> 6</span>   <span class="k">end</span>
+<span class="lineno"> 7</span> <span class="k">end</span>
+<span class="lineno"> 8</span> 
+<span class="lineno"> 9</span> <span class="k">begin</span> 
+<span class="lineno">10</span>   <span class="k">begin</span>
+<span class="lineno">11</span>     <span class="k">raise</span> <span class="s2">&quot;Error A&quot;</span> 
+<span class="lineno">12</span>   <span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">error</span>
+<span class="lineno">13</span>     <span class="k">raise</span> <span class="no">MyError</span><span class="p">,</span> <span class="s2">&quot;Error B&quot;</span> 
+<span class="lineno">14</span>   <span class="k">end</span>
+<span class="lineno">15</span> <span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">error</span>
+<span class="lineno">16</span>   <span class="nb">puts</span> <span class="s2">&quot;Current failure: </span><span class="si">#{</span><span class="n">error</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="lineno">17</span>   <span class="nb">puts</span> <span class="s2">&quot;Original failure: </span><span class="si">#{</span><span class="n">error</span><span class="o">.</span><span class="n">original</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="lineno">18</span> <span class="k">end</span></code></pre></div>
+
+<p>Running this code produces the output:</p>
+
+<pre><code>Current failure: #&lt;MyError: Error B&gt;
+Original failure: #&lt;RuntimeError: Error A&gt;
+</code></pre>
+
+<p>What’s happening here? We created our own error class called <code>MyError</code> that stores any currently active exception in <code>original</code> and sends <code>msg</code> up to its parent <code>StandardError</code> object via the call to <code>super</code>. As we’d expect, our current failure is set to Error B (our most recent failure), which is of type <code>MyError</code>. The key thing to note in this example is that we still have access to Error A <em>through</em> Error B by calling <code>error.original</code>. (Note that Error A is a <code>RuntimeError</code> because this is the default exception type when you use just a bare <code>raise</code>.)</p>
+
+<h3 id="code-bulkheads">Code Bulkheads</h3>
+<p>Nobody wants their code to sink like the Titanic. In ship-speak, bulkheads are placed between ship compartments so that a leak in one compartment will not spread to others. This enables a ship to stay afloat even if one of its compartments is completely flooded. The Titanic had inadequate bulkheads, whith turned out to be a devastating design flaw.</p>
+
+<p>Exceptional Ruby discusses the concept of erecting Bulkheads in your code to stop cascading failures. This isolates parts of your codes from others so that a failure in one area doesn’t cause other parts of the ship to go down. </p>
+
+<p>It’s a good idea to place bulkheads between your app and External Services and External processes. One easy way <em>Exceptional Ruby</em> shows us how to do this is to rescue exceptions and write them to a log instead of bringing down the program:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="lineno">1</span> <span class="k">begin</span>
+<span class="lineno">2</span>   <span class="c1"># External Web Request</span>
+<span class="lineno">3</span>   <span class="n">response</span> <span class="o">=</span> <span class="no">HTTParty</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://www.reddit.com/r/pics&quot;</span><span class="p">)</span>
+<span class="lineno">4</span>   <span class="c1"># Everyone loves a good HTTParty</span>
+<span class="lineno">5</span> <span class="k">rescue</span> <span class="no">Exception</span> <span class="o">=&gt;</span> <span class="n">error</span>
+<span class="lineno">6</span>   <span class="n">logger</span><span class="o">.</span><span class="n">error</span> <span class="s2">&quot;External Web Request encountered an Exception.&quot;</span>
+<span class="lineno">7</span>   <span class="n">logger</span><span class="o">.</span><span class="n">error</span> <span class="n">error</span><span class="o">.</span><span class="n">message</span>
+<span class="lineno">8</span>   <span class="n">logger</span><span class="o">.</span><span class="n">error</span> <span class="n">error</span><span class="o">.</span><span class="n">backtrace</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="lineno">9</span> <span class="k">end</span></code></pre></div>
+
+<h3 id="circuit-breakers">Circuit Breakers</h3>
+<p>Another way to handle failures is using the Circuit Breaker pattern, which Avdi references from Michael Nygard’s book <em>Release It!</em> Circuit breakers are essentially a way of counting failures in particular areas of your App. </p>
+
+<p>When a threshold is met for one component of your program, a “circuit breaker” opens and that component isn’t permitted to operate. After a period of time, the circuit breaker enters a half-open state, where one failure can cause it to open again. Normal operation is the “closed” state. Check out Will Sargent’s <a href="https://github.com/wsargent/circuit_breaker">Ruby Implementation</a>  of this pattern on Github.</p>
+
+<h3 id="allow-for-user-injected-failure-policies">Allow for User-injected Failure Policies</h3>
+<p>I <em>love</em> this exceptional method of handling exceptions. (There’s that pesky pun again…) It’s as simple as this - defer to the method caller!</p>
+
+<p>Avdi refers to this as “caller-supplied fallback strategy”. In my <a href="http://www.melanievanderlugt.com/2015/02/02/book-review-confident-ruby/">previous book review about Confident Ruby</a>, I raved about using the Hash fetch method to assert the presence of hash keys. </p>
+
+<p>In <em>Exceptional Ruby</em>, I learned that you can pass a block to the fetch method that tells it how to respond to failures! This gives the caller the power to dictate the policy for missing keys, instead of having a policy foisted upon them.</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="lineno">1</span> <span class="n">h</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="ss">:required_key</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno">2</span>   <span class="k">raise</span> <span class="s2">&quot;ZOMG that required key doesn&#39;t exist!&quot;</span> 
+<span class="lineno">3</span> <span class="p">}</span></code></pre></div>
+
+<p>You can write your own methods so that you let callers determine what to do if something goes awry. Here’s a super simple example to show you how a method can be structured if you want users to provide their own way of handling unexpected behavior:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="lineno">1</span> <span class="k">def</span> <span class="nf">render_book_details</span><span class="p">(</span><span class="n">book</span><span class="p">)</span>
+<span class="lineno">2</span>   <span class="k">if</span> <span class="n">book</span><span class="o">.</span><span class="n">title</span> <span class="o">&amp;&amp;</span> <span class="n">book</span><span class="o">.</span><span class="n">author</span>
+<span class="lineno">3</span>     <span class="s2">&quot;</span><span class="si">#{</span><span class="n">book</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2"> by </span><span class="si">#{</span><span class="n">book</span><span class="o">.</span><span class="n">author</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="lineno">4</span>   <span class="k">else</span>
+<span class="lineno">5</span>     <span class="k">yield</span>
+<span class="lineno">6</span>   <span class="k">end</span>
+<span class="lineno">7</span> <span class="k">end</span></code></pre></div>
+
+<p>Here, I’ve assumed you have a book object with title and author attributes. If an instance of book doesn’t have either of these attributes, we have a problem. The caller needs to provide a way of handling this problem in the form of a code block. There are a couple ways the caller might handle this.</p>
+
+<p>Perhaps you want the <code>render_book_details</code> method to return a default string if the book title and author aren’t present:</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">print_book_details</span><span class="p">(</span><span class="n">mybook</span><span class="p">){</span> <span class="s2">&quot;Book title or author not found.&quot;</span> <span class="p">}</span></code></pre></div>
+
+<p>You could also raise an exception instead of returning a default string. That’s easy too!</p>
+
+<div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">print_book_details</span><span class="p">(</span><span class="n">mybook</span><span class="p">){</span> <span class="k">raise</span> <span class="s2">&quot;Book is missing title or author.&quot;</span> <span class="p">}</span></code></pre></div>
+
+<p>The user can provide any number of code blocks to handle errors in this situation. What’s truly important is that the power lies with the caller, not with the method author.</p>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2015/02/23/book-review-growth-hacker-marketing/" data-toggle="tooltip" data-placement="top" title="Book Review: Growth Hacker Marketing">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="https://twitter.com/melanie_vee">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://www.facebook.com/melanie.kreie">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://github.com/melanievee">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="mailto:melanie.vanderlugt@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; Melanie VanderLugt 2015</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js "></script>
+
+
+</body>
+
+</html>

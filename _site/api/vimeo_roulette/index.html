@@ -8,9 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
 
-    <title>Book Review: Growth Hacker Marketing - Melanie VanderLugt</title>
+    <title>Vimeo Roulette - Melanie VanderLugt</title>
 
-    <link rel="canonical" href="http://www.melanievanderlugt.com/2015/02/23/book-review-growth-hacker-marketing/">
+    <link rel="canonical" href="http://www.melanievanderlugt.com/api/vimeo_roulette/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -83,18 +83,16 @@
 </nav>
 
 
-    <!-- Post Header -->
-<header class="intro-header" style="background-image: url('/img/infinite-stairs.jpg')">
+    <!-- Page Header -->
+<header class="intro-header" style="background-image: url('/img/post-bg-02.jpg')">
 <div class="transparency">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <h1>Book Review: Growth Hacker Marketing</h1>
-                    
-                    <h2 class="subheading">A quick read for anyone who needs an enthusiasm boost in their marketing department.</h2>
-                    
-                    <span class="meta">Posted by Melanie VanderLugt on February 23, 2015</span>
+                <div class="site-heading">
+                    <h1>Vimeo Roulette</h1>
+                    <hr class="small">
+                    <span class="subheading">Having fun with Vimeo's oEmbed API.</span>
                 </div>
             </div>
         </div>
@@ -102,40 +100,58 @@
 </div>
 </header>
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<!-- Main Content -->
+<div class="container">
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+			<head>
+    <meta charset="utf-8">
+    <title>Vimeo Javascript oEmbed Example</title>
+    <script>
+ 
+        // This is the URL of the video you want to load
+        var videoUrl = 'http://www.vimeo.com/7100569';
+ 
+        // This is the oEmbed endpoint for Vimeo (we're using JSON)
+        // (Vimeo also supports oEmbed discovery. See the PHP example.)
+        var endpoint = 'http://www.vimeo.com/api/oembed.json';
+ 
+        // Tell Vimeo what function to call
+        var callback = 'embedVideo';
+ 
+        // Put together the URL
+        var url = endpoint + '?url=' + encodeURIComponent(videoUrl) + '&callback=' + callback + '&width=640';
+ 
+        console.log(url);
 
-				<p>To be honest, it will probably take me longer to write a review for this book than it would for you to just go out and read it. I’m serious. According to my Kindle, I’m was 7% into the book by the time I reached the Intro section. Almost every “page turn” on my Kindle earned me an additional 1% towards completion. This book is either very short or I am a magically fast reader. I’m afraid it’s probably the latter.</p>
+        // This function puts the video on the page
+        function embedVideo(video) {
+            document.getElementById('embed').innerHTML = unescape(video.html);
+        }
+ 
+        // This function loads the data from Vimeo
+        function init() {
+            var js = document.createElement('script');
+            js.setAttribute('type', 'text/javascript');
+            js.setAttribute('src', url);
+            document.getElementsByTagName('head').item(0).appendChild(js);
+        }
+ 
+        // Call our init function when the page loads
+        window.onload = init;
+ 
+    </script>
+</head>
+<body>
 
-<p>Ryan Holiday’s Growth Hacker Marketing (published in 2013) is all about getting rid of all your old ideas about marketing. It’s full of stories about successful companies that used new, innovative techniques to become successful in remarkably short amounts of time. The bottom line of the book is that you should study your customers and build the product that they truly want, not the product that you think they want.</p>
+    <h1>Vimeo Javascript oEmbed Example</h1>
+    <div id="embed">Loading video...</div>
 
-<p>What this book lacks in concrete step-by-step help in putting together your marketing plan, it makes up for in enthusiasm and motivation. There’s something about reading other companies’ success stories that gets my mind racing with possibilities and makes me excited to get to work. I didn’t find it as helpful or concrete as books like The Lean Startup or Traction, but I might re-read it later when I’m feeling low on motivation.</p>
-
-<p>The added bonus? Read this book and you’ll finally learn how Airbnb picked their name!</p>
-
-
-                <hr>
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/2015/02/02/book-review-confident-ruby/" data-toggle="tooltip" data-placement="top" title="Book Review: Confident Ruby">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/2015/03/12/book-review-exceptional-ruby/" data-toggle="tooltip" data-placement="top" title="Book Review: Exceptional Ruby">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-            </div>
-        </div>
-    </div>
-</article>
+</body>
+</html>
+		</div>
+	</div>
+</div>
 
 <hr>
 
