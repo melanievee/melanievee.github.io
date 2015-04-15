@@ -5,9 +5,10 @@ email: melanie.vanderlugt@gmail.com
 description: "I'm a Ruby Developer, runner, and blogger from Seattle, WA. Welcome to my online portfolio of book reviews and software projects."
 baseurl: ""
 url: "http://www.melanievanderlugt.com"
-twitter_username: melanie_vee
+# twitter_username: melanie_vee
 github_username:  melanievee
-facebook_username:  melanie.kreie
+# facebook_username:  melanie.kreie
+linkedin_url:  "https://www.linkedin.com/in/melanievanderlugt"
 
 # Build settings
 markdown: kramdown
