@@ -9,9 +9,9 @@
     <meta name="description" content="I'm a Ruby Developer, runner, and blogger from Seattle, WA. Welcome to my online portfolio of book reviews and software projects.">
     <meta name="google-site-verification" content="o_KYzMaeOvRsXKMx4seZ6x01h3PPBOCfDkj9YoTRybc" />
 
-    <title>Melanie VanderLugt</title>
+    <title>API Project: Vimeo Roulette - Melanie VanderLugt</title>
 
-    <link rel="canonical" href="http://www.melanievanderlugt.com/">
+    <link rel="canonical" href="http://www.melanievanderlugt.com/2015/04/18/Vimeo-Roulette-With-Vimeos-oEmbed-API/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -84,16 +84,18 @@
 </nav>
 
 
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/img/flower-explosion.jpeg')">
 <div class="transparency">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>Melanie VanderLugt</h1>
-                    <hr class="small">
-                    <span class="subheading">Ruby Developer. Blogger. Runner.</span>
+                <div class="post-heading">
+                    <h1>API Project: Vimeo Roulette</h1>
+                    
+                    <h2 class="subheading">A bit of fun with Vimeo's oEmbed API.</h2>
+                    
+                    <span class="meta">Posted by Melanie VanderLugt on April 18, 2015</span>
                 </div>
             </div>
         </div>
@@ -101,88 +103,45 @@
 </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-	<div class="row">
-		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-			
-<div class="post-preview">
-    <a href="/2015/04/18/Vimeo-Roulette-With-Vimeos-oEmbed-API/">
-        <h2 class="post-title">            API Project: Vimeo Roulette
-        </h2>
-        
-        <h3 class="post-subtitle">
-            A bit of fun with Vimeo's oEmbed API.
-        </h3>
-        
-    </a>
-    <p class="post-meta">Posted by Melanie VanderLugt on April 18, 2015</p>
-</div>
-<hr>
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-<div class="post-preview">
-    <a href="/2015/03/12/book-review-exceptional-ruby/">
-        <h2 class="post-title">            Book Review: Exceptional Ruby
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Another good book by Avdi Grimm.
-        </h3>
-        
-    </a>
-    <p class="post-meta">Posted by Melanie VanderLugt on March 12, 2015</p>
-</div>
-<hr>
+				<h2 id="vimeo-roulette">Vimeo Roulette</h2>
 
-<div class="post-preview">
-    <a href="/2015/02/23/book-review-growth-hacker-marketing/">
-        <h2 class="post-title">            Book Review: Growth Hacker Marketing
-        </h2>
-        
-        <h3 class="post-subtitle">
-            A quick read for anyone who needs an enthusiasm boost in their marketing department.
-        </h3>
-        
-    </a>
-    <p class="post-meta">Posted by Melanie VanderLugt on February 23, 2015</p>
-</div>
-<hr>
+<p>I started futzing around with Vimeo’s oEmbed API a month ago, then realized I was lacking a solid JavaScript foundation. Googling things can only get you so far; sometimes you need an academic course start to finish. So down the rabbit hole I went!</p>
 
-<div class="post-preview">
-    <a href="/2015/02/02/book-review-confident-ruby/">
-        <h2 class="post-title">            Book Review: Confident Ruby
-        </h2>
-        
-        <h3 class="post-subtitle">
-            Every Rubyist should have this book on his/her reference shelf.
-        </h3>
-        
-    </a>
-    <p class="post-meta">Posted by Melanie VanderLugt on February 2, 2015</p>
-</div>
-<hr>
+<p>I lucked out and found a fantastic JavaScript course on <a href="https://learnable.com/home">Learnable</a>. (Thanks, New Relic, for the free Learnable trial for using your services!)</p>
 
-<div class="post-preview">
-    <a href="/2015/01/20/a-blog-is-born/">
-        <h2 class="post-title">            Oh Hey There, World.
-        </h2>
-        
-        <h3 class="post-subtitle">
-            I've created a monster.
-        </h3>
-        
-    </a>
-    <p class="post-meta">Posted by Melanie VanderLugt on January 20, 2015</p>
-</div>
-<hr>
+<p>Vimeo’s <a href="https://developer.vimeo.com/apis/oembed">oEmbed API</a> is absurdly easy to use. No API Keys are required because you’re just embedding a video on your own site. Once I figure out how to use their oEmbed API, all I had to do was use JavaScript to find a random Vimeo Video ID, make sure the video exists, and load it from Vimeo.</p>
+
+<p>To see the project, hop on over to my <a href="/api/vimeo_roulette" class="standout">Vimeo Roulette</a> page.</p>
+
+<p>There are a few things I’m hoping to add soon:</p>
+
+<ul>
+  <li>A button to “Spin Again”, so to speak, and fetch a new random video.</li>
+  <li>Error checking for times when Vimeo is down.</li>
+</ul>
 
 
-<!-- Pager -->
+                <hr>
 
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2015/03/12/book-review-exceptional-ruby/" data-toggle="tooltip" data-placement="top" title="Book Review: Exceptional Ruby">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
 
-		</div>
-	</div>
-</div>
+            </div>
+        </div>
+    </div>
+</article>
 
 <hr>
 
