@@ -8,7 +8,7 @@ header-img: "img/tower-of-pisa.jpeg"
 tag:        book-review
 ---
 
-Exceptional Ruby (published in 2011) was my second Avdi Grimm book in the last couple of months. This book is a great way to dip your toes into the exception handling pond without getting scared away. I'm a sucker for books that start off with a coding metaphor, and Avdi didn't disappoint. In the intro, he compares exception handling to the toys and clothes a kid stuffs in his closet right before Mom comes to inspect his room. Like a kid cleaning his room, a lot of programmers leave exception handling until last minute, more of an "oh crap!" afterthought than an important well-planned piece of your program. 
+Exceptional Ruby (published in 2011) was my second Avdi Grimm book in the last couple of months. This book is a great way to dip your toes into the exception handling pond without getting scared away. I'm a sucker for books that start off with a coding metaphor, and Avdi didn't disappoint. In the intro, he compares exception handling to the toys and clothes a kid stuffs in his closet right before Mom comes to inspect his room. Like a kid cleaning his room, a lot of programmers leave exception handling until last minute, more of an "oh crap!" afterthought than an important well-planned piece of your program.
 
 Failure handling is the underdog that finally gets its time to shine in Exceptional Ruby. Avdi provides example after example of great ways to raise and handle exceptions, many of which I never would've thought up on my own out of the blue. If you read this book and don't feel exceptionally enlightened (pun totally intended), you must be an exceptional genius already. (Is it bad form to use the same pun twice in one sentence?)
 
@@ -20,10 +20,10 @@ I'll let you in on a secret. I mostly write book reviews for my own personal ben
 1. In Ruby, `raise` and `fail` are synonyms. Neither is a Ruby keyword. Rather, they're Kernel methods, so they **can** be overriden!
 2. The currently active exception is always stored in the global variable `$!`. If there is no active exception, `$!` will be nil.
 3. The `begin` keyword is considered by some to be a code smell in Ruby. Instead of peppering your code with lots of `begin`, `rescue`, and `end` blocks, take advantage of Ruby's implicit begin blocks:
-        
+
         def foo
           # main logic
-        rescue 
+        rescue
           # handle failures here. No explicit begin or end necessary, hooray!
         end
 
@@ -40,22 +40,22 @@ I'll let you in on a secret. I mostly write book reviews for my own personal ben
 ###Nested Exceptions
 In Ruby, it's possible to raise a new exception while we're in the process of handling a previously incurred exception. When this occurs, the original exception is thrown away, completely gone, *unless* you utilize the idea of Nested Exceptions that Avdi introduces in his book.
 
-Nested Exceptions hold a reference to the original exception so that it isn't thrown away. Here's how you'd do it: 
+Nested Exceptions hold a reference to the original exception so that it isn't thrown away. Here's how you'd do it:
 
 {% highlight ruby linenos %}
 class MyError < StandardError
   attr_reader :original
   def initialize(msg, original=$!)
     super(msg)
-    @original = original; 
+    @original = original;
   end
 end
 
-begin 
+begin
   begin
-    raise "Error A" 
+    raise "Error A"
   rescue => error
-    raise MyError, "Error B" 
+    raise MyError, "Error B"
   end
 rescue => error
   puts "Current failure: #{error.inspect}"
@@ -73,7 +73,7 @@ What's happening here? We created our own error class called `MyError` that stor
 ###Code Bulkheads
 Nobody wants their code to sink like the Titanic. In ship-speak, bulkheads are placed between ship compartments so that a leak in one compartment will not spread to others. This enables a ship to stay afloat even if one of its compartments is completely flooded. The Titanic had inadequate bulkheads, whith turned out to be a devastating design flaw.
 
-Exceptional Ruby discusses the concept of erecting Bulkheads in your code to stop cascading failures. This isolates parts of your codes from others so that a failure in one area doesn't cause other parts of the ship to go down. 
+Exceptional Ruby discusses the concept of erecting Bulkheads in your code to stop cascading failures. This isolates parts of your codes from others so that a failure in one area doesn't cause other parts of the ship to go down.
 
 It's a good idea to place bulkheads between your app and External Services and External processes. One easy way *Exceptional Ruby* shows us how to do this is to rescue exceptions and write them to a log instead of bringing down the program:
 
@@ -90,7 +90,7 @@ end
 {% endhighlight %}
 
 ###Circuit Breakers
-Another way to handle failures is using the Circuit Breaker pattern, which Avdi references from Michael Nygard's book <em>Release It!</em> Circuit breakers are essentially a way of counting failures in particular areas of your App. 
+Another way to handle failures is using the Circuit Breaker pattern, which Avdi references from Michael Nygard's book <em>Release It!</em> Circuit breakers are essentially a way of counting failures in particular areas of your App.
 
 When a threshold is met for one component of your program, a "circuit breaker" opens and that component isn't permitted to operate. After a period of time, the circuit breaker enters a half-open state, where one failure can cause it to open again. Normal operation is the "closed" state. Check out Will Sargent's <a href="https://github.com/wsargent/circuit_breaker">Ruby Implementation</a>  of this pattern on Github.
 
@@ -98,12 +98,12 @@ When a threshold is met for one component of your program, a "circuit breaker" o
 ###Allow for User-injected Failure Policies
 I *love* this exceptional method of handling exceptions. (There's that pesky pun again...) It's as simple as this - defer to the method caller!
 
-Avdi refers to this as "caller-supplied fallback strategy". In my <a href="{{ site.url }}/2015/02/02/book-review-confident-ruby/">previous book review about Confident Ruby</a>, I raved about using the Hash fetch method to assert the presence of hash keys. 
+Avdi refers to this as "caller-supplied fallback strategy". In my <a href="{{ site.url }}/2015/02/02/book-review-confident-ruby/">previous book review about Confident Ruby</a>, I raved about using the Hash fetch method to assert the presence of hash keys.
 
 In *Exceptional Ruby*, I learned that you can pass a block to the fetch method that tells it how to respond to failures! This gives the caller the power to dictate the policy for missing keys, instead of having a policy foisted upon them.
 {% highlight ruby linenos %}
 h.fetch(:required_key) {
-  raise "ZOMG that required key doesn't exist!" 
+  raise "ZOMG that required key doesn't exist!"
 }
 {% endhighlight %}
 
@@ -126,7 +126,7 @@ print_book_details(mybook){ "Book title or author not found." }
 {% endhighlight %}
 
 You could also raise an exception instead of returning a default string. That's easy too!
-{% highlight ruby %}  
+{% highlight ruby %}
 print_book_details(mybook){ raise "Book is missing title or author." }
 {% endhighlight %}
 

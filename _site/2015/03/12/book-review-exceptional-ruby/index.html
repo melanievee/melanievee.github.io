@@ -109,7 +109,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-				<p>Exceptional Ruby (published in 2011) was my second Avdi Grimm book in the last couple of months. This book is a great way to dip your toes into the exception handling pond without getting scared away. I’m a sucker for books that start off with a coding metaphor, and Avdi didn’t disappoint. In the intro, he compares exception handling to the toys and clothes a kid stuffs in his closet right before Mom comes to inspect his room. Like a kid cleaning his room, a lot of programmers leave exception handling until last minute, more of an “oh crap!” afterthought than an important well-planned piece of your program. </p>
+				<p>Exceptional Ruby (published in 2011) was my second Avdi Grimm book in the last couple of months. This book is a great way to dip your toes into the exception handling pond without getting scared away. I’m a sucker for books that start off with a coding metaphor, and Avdi didn’t disappoint. In the intro, he compares exception handling to the toys and clothes a kid stuffs in his closet right before Mom comes to inspect his room. Like a kid cleaning his room, a lot of programmers leave exception handling until last minute, more of an “oh crap!” afterthought than an important well-planned piece of your program.</p>
 
 <p>Failure handling is the underdog that finally gets its time to shine in Exceptional Ruby. Avdi provides example after example of great ways to raise and handle exceptions, many of which I never would’ve thought up on my own out of the blue. If you read this book and don’t feel exceptionally enlightened (pun totally intended), you must be an exceptional genius already. (Is it bad form to use the same pun twice in one sentence?)</p>
 
@@ -125,7 +125,7 @@
 
     <pre><code> def foo
    # main logic
- rescue 
+ rescue
    # handle failures here. No explicit begin or end necessary, hooray!
  end
 </code></pre>
@@ -147,21 +147,21 @@
 <h3 id="nested-exceptions">Nested Exceptions</h3>
 <p>In Ruby, it’s possible to raise a new exception while we’re in the process of handling a previously incurred exception. When this occurs, the original exception is thrown away, completely gone, <em>unless</em> you utilize the idea of Nested Exceptions that Avdi introduces in his book.</p>
 
-<p>Nested Exceptions hold a reference to the original exception so that it isn’t thrown away. Here’s how you’d do it: </p>
+<p>Nested Exceptions hold a reference to the original exception so that it isn’t thrown away. Here’s how you’d do it:</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="lineno"> 1</span> <span class="k">class</span> <span class="nc">MyError</span> <span class="o">&lt;</span> <span class="no">StandardError</span>
 <span class="lineno"> 2</span>   <span class="kp">attr_reader</span> <span class="ss">:original</span>
 <span class="lineno"> 3</span>   <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">original</span><span class="o">=</span><span class="vg">$!</span><span class="p">)</span>
 <span class="lineno"> 4</span>     <span class="k">super</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-<span class="lineno"> 5</span>     <span class="vi">@original</span> <span class="o">=</span> <span class="n">original</span><span class="p">;</span> 
+<span class="lineno"> 5</span>     <span class="vi">@original</span> <span class="o">=</span> <span class="n">original</span><span class="p">;</span>
 <span class="lineno"> 6</span>   <span class="k">end</span>
 <span class="lineno"> 7</span> <span class="k">end</span>
 <span class="lineno"> 8</span> 
-<span class="lineno"> 9</span> <span class="k">begin</span> 
+<span class="lineno"> 9</span> <span class="k">begin</span>
 <span class="lineno">10</span>   <span class="k">begin</span>
-<span class="lineno">11</span>     <span class="k">raise</span> <span class="s2">&quot;Error A&quot;</span> 
+<span class="lineno">11</span>     <span class="k">raise</span> <span class="s2">&quot;Error A&quot;</span>
 <span class="lineno">12</span>   <span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">error</span>
-<span class="lineno">13</span>     <span class="k">raise</span> <span class="no">MyError</span><span class="p">,</span> <span class="s2">&quot;Error B&quot;</span> 
+<span class="lineno">13</span>     <span class="k">raise</span> <span class="no">MyError</span><span class="p">,</span> <span class="s2">&quot;Error B&quot;</span>
 <span class="lineno">14</span>   <span class="k">end</span>
 <span class="lineno">15</span> <span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">error</span>
 <span class="lineno">16</span>   <span class="nb">puts</span> <span class="s2">&quot;Current failure: </span><span class="si">#{</span><span class="n">error</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -179,7 +179,7 @@ Original failure: #&lt;RuntimeError: Error A&gt;
 <h3 id="code-bulkheads">Code Bulkheads</h3>
 <p>Nobody wants their code to sink like the Titanic. In ship-speak, bulkheads are placed between ship compartments so that a leak in one compartment will not spread to others. This enables a ship to stay afloat even if one of its compartments is completely flooded. The Titanic had inadequate bulkheads, whith turned out to be a devastating design flaw.</p>
 
-<p>Exceptional Ruby discusses the concept of erecting Bulkheads in your code to stop cascading failures. This isolates parts of your codes from others so that a failure in one area doesn’t cause other parts of the ship to go down. </p>
+<p>Exceptional Ruby discusses the concept of erecting Bulkheads in your code to stop cascading failures. This isolates parts of your codes from others so that a failure in one area doesn’t cause other parts of the ship to go down.</p>
 
 <p>It’s a good idea to place bulkheads between your app and External Services and External processes. One easy way <em>Exceptional Ruby</em> shows us how to do this is to rescue exceptions and write them to a log instead of bringing down the program:</p>
 
@@ -194,19 +194,19 @@ Original failure: #&lt;RuntimeError: Error A&gt;
 <span class="lineno">9</span> <span class="k">end</span></code></pre></div>
 
 <h3 id="circuit-breakers">Circuit Breakers</h3>
-<p>Another way to handle failures is using the Circuit Breaker pattern, which Avdi references from Michael Nygard’s book <em>Release It!</em> Circuit breakers are essentially a way of counting failures in particular areas of your App. </p>
+<p>Another way to handle failures is using the Circuit Breaker pattern, which Avdi references from Michael Nygard’s book <em>Release It!</em> Circuit breakers are essentially a way of counting failures in particular areas of your App.</p>
 
 <p>When a threshold is met for one component of your program, a “circuit breaker” opens and that component isn’t permitted to operate. After a period of time, the circuit breaker enters a half-open state, where one failure can cause it to open again. Normal operation is the “closed” state. Check out Will Sargent’s <a href="https://github.com/wsargent/circuit_breaker">Ruby Implementation</a>  of this pattern on Github.</p>
 
 <h3 id="allow-for-user-injected-failure-policies">Allow for User-injected Failure Policies</h3>
 <p>I <em>love</em> this exceptional method of handling exceptions. (There’s that pesky pun again…) It’s as simple as this - defer to the method caller!</p>
 
-<p>Avdi refers to this as “caller-supplied fallback strategy”. In my <a href="http://www.melanievanderlugt.com/2015/02/02/book-review-confident-ruby/">previous book review about Confident Ruby</a>, I raved about using the Hash fetch method to assert the presence of hash keys. </p>
+<p>Avdi refers to this as “caller-supplied fallback strategy”. In my <a href="http://www.melanievanderlugt.com/2015/02/02/book-review-confident-ruby/">previous book review about Confident Ruby</a>, I raved about using the Hash fetch method to assert the presence of hash keys.</p>
 
 <p>In <em>Exceptional Ruby</em>, I learned that you can pass a block to the fetch method that tells it how to respond to failures! This gives the caller the power to dictate the policy for missing keys, instead of having a policy foisted upon them.</p>
 
 <div class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="lineno">1</span> <span class="n">h</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span><span class="ss">:required_key</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno">2</span>   <span class="k">raise</span> <span class="s2">&quot;ZOMG that required key doesn&#39;t exist!&quot;</span> 
+<span class="lineno">2</span>   <span class="k">raise</span> <span class="s2">&quot;ZOMG that required key doesn&#39;t exist!&quot;</span>
 <span class="lineno">3</span> <span class="p">}</span></code></pre></div>
 
 <p>You can write your own methods so that you let callers determine what to do if something goes awry. Here’s a super simple example to show you how a method can be structured if you want users to provide their own way of handling unexpected behavior:</p>
@@ -240,6 +240,10 @@ Original failure: #&lt;RuntimeError: Error A&gt;
                         <a href="/2015/02/23/book-review-growth-hacker-marketing/" data-toggle="tooltip" data-placement="top" title="Book Review: Growth Hacker Marketing">&larr; Previous Post</a>
                     </li>
                     
+                    
+                    <li class="next">
+                        <a href="/2015/04/18/Vimeo-Roulette-With-Vimeos-oEmbed-API/" data-toggle="tooltip" data-placement="top" title="API Project: Vimeo Roulette">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
