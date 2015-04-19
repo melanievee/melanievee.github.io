@@ -5,9 +5,41 @@
     <description>I&#39;m a Ruby Developer, runner, and blogger from Seattle, WA. Welcome to my online portfolio of book reviews and software projects.</description>
     <link>http://www.melanievanderlugt.com/</link>
     <atom:link href="http://www.melanievanderlugt.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 18 Apr 2015 18:17:52 +0200</pubDate>
-    <lastBuildDate>Sat, 18 Apr 2015 18:17:52 +0200</lastBuildDate>
+    <pubDate>Sun, 19 Apr 2015 16:19:45 +0200</pubDate>
+    <lastBuildDate>Sun, 19 Apr 2015 16:19:45 +0200</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>Pomatillo</title>
+        <description>&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
+
+&lt;p&gt;Pomatillo makes planning and tracking your projects simple and easy.&lt;/p&gt;
+
+&lt;p&gt;I know a lot of people who use the Pomodoro technique to boost their productivity. If you haven’t heard of it, here’s the TL/DR: you alternate timed, uninterrupted work segments with timed breaks. The theory is that a 25-minute focused work segment followed by a 5-minute break establishes an optimal workflow.&lt;/p&gt;
+
+&lt;p&gt;I use this work method exclusively, and I like to count my work segments so know how much time I’m spending on my projects. It’s also really nice to have a measure of how productive I was on any given day. My husband and I even have a reward system set up that we call the “Bakery Dozen”. If one of us manages to get through a dozen pomodoros in one day, we get to go to a bakery for a piece of cake. Healthy, right?!&lt;/p&gt;
+
+&lt;p&gt;Pomatillo was originally built as a project for Rails Rumble, a 48 hour hackathon my husband and I entered together in October 2014. We are continually adding new features and it is 100% free to use.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://pomatillo.com&quot; class=&quot;standout&quot;&gt;Try Pomatillo today!&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;features&quot;&gt;Features&lt;/h2&gt;
+&lt;p&gt;Using Pomatillo, you can easily create and track your projects and tasks. The built in timer will help you time your 25-minute work segments. Once your Pom is finished, the Pom count for your currently selected Work Task is incremented.&lt;/p&gt;
+
+&lt;p class=&quot;centered&quot;&gt;&lt;img src=&quot;/img/pomatillo/pomatillo_dashboard.png&quot; alt=&quot;Pomatillo project planning page&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can also utilize our awesome reporting page to see how many Poms you completed each day over the last two weeks. The pie charts even show you where you’ve been spending most of your time.&lt;/p&gt;
+
+&lt;p class=&quot;centered&quot;&gt;&lt;img src=&quot;/img/pomatillo/pomatillo_report.png&quot; alt=&quot;Pomatillo reports page&quot; /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sun, 19 Apr 2015 16:33:00 +0200</pubDate>
+        <link>http://www.melanievanderlugt.com/2015/04/19/pomatillo/</link>
+        <guid isPermaLink="true">http://www.melanievanderlugt.com/2015/04/19/pomatillo/</guid>
+        
+        <category>projects</category>
+        
+        
+      </item>
     
       <item>
         <title>API Project: Vimeo Roulette</title>
@@ -32,7 +64,7 @@
         <link>http://www.melanievanderlugt.com/2015/04/18/Vimeo-Roulette-With-Vimeos-oEmbed-API/</link>
         <guid isPermaLink="true">http://www.melanievanderlugt.com/2015/04/18/Vimeo-Roulette-With-Vimeos-oEmbed-API/</guid>
         
-        <category>api-project</category>
+        <category>projects</category>
         
         
       </item>

@@ -1,8 +1,26 @@
 ---
 layout: page
 title: "Projects"
-description: "Side Projects Are Fun."
-header-img: "img/about-bg.jpg"
+description: "Side Projects Are Oh So Fun."
+header-img: "img/blurred_lines.jpeg"
 ---
 
-<p>Orphaned software projects make me sad. In an attempt to give some of my side projects a home, I'll post about them here. Anything that doesn't have to do with API work will eventually have its own blurb here.</p>
+<p>Nothing makes me happier than hacking on a side project that really gets my brain moving. I enjoy learning how to use different APIs and get a kick out of writing JavaScript, but I'm most happy building Rails projects.</p>
+
+<p>But sometimes these projects end up without a home, and orphaned software projects make me sad. In attempt to give them somewhere to live, and to give them the 15 minutes of fame they (sometimes) deserve, I'll post about these projects here.</p>
+
+{% for post in site.tags.projects %}
+<div class="post-preview">
+    <a href="{{ post.url | prepend: site.baseurl }}">
+        <h2 class="post-title">            {{ post.title }}
+        </h2>
+        {% if post.subtitle %}
+        <h3 class="post-subtitle">
+            {{ post.subtitle }}
+        </h3>
+        {% endif %}
+    </a>
+    <p class="post-meta">Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}</p>
+</div>
+<hr>
+{% endfor %}
