@@ -38,7 +38,8 @@ var VimeoWidget =
 
   clickListener: function(event)
   {
-    alert("Clicked!");
+    var url = VimeoWidget.buildURL();
+    VimeoWidget.loadVimeoData(url);
   },
 
   // This function puts the video on the page
