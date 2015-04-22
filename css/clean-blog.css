@@ -403,3 +403,12 @@ img::-moz-selection {
 body {
   webkit-tap-highlight-color: #0085a1;
 }
+
+
+/* Vimeo Roulette */
+.vimeo__body { text-align: center; }
+#vimeo__respin
+{
+  margin-bottom: 1em;
+  margin-top: 1em;
+}

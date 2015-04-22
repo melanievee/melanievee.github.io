@@ -7,7 +7,7 @@ var VimeoWidget =
     // Get handlers for key elements & setup clickListener
     var videoEmbed = document.getElementById("embed");
     var reSpin = document.getElementById("respin");
-    $(respin).bind("click",VimeoWidget.clickListener);
+    $(vimeo__respin).bind("click",VimeoWidget.clickListener);
 
     // Fetch random Video, build Vimeo URL, and embed Video
     var url = VimeoWidget.buildURL();
@@ -18,7 +18,7 @@ var VimeoWidget =
   {
     var videoID = VimeoWidget.getRandomVideoID();
     var videoUrl = 'http://www.vimeo.com/' + videoID;
-    // This is the oEmbed endpoint for Vimeo (we're using JSON)
+    // This is the JSON oEmbed endpoint for Vimeo
     var endpoint = 'http://www.vimeo.com/api/oembed.json';
     // Tell Vimeo what function to call
     var callback = 'VimeoWidget.embedVideo';
