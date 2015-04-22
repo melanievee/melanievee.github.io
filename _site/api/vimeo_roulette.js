@@ -5,7 +5,7 @@ var VimeoWidget =
   {
 
     // Get handlers for key elements & setup clickListener
-    var videoEmbed = document.getElementById("embed");
+    var videoEmbed = document.getElementById("vimeo__embed");
     var reSpin = document.getElementById("respin");
     $(vimeo__respin).bind("click",VimeoWidget.clickListener);
 
@@ -38,7 +38,7 @@ var VimeoWidget =
 
   clickListener: function(event)
   {
-    var vimeoWidget = document.getElementById('embed');
+    var vimeoWidget = document.getElementById('vimeo__embed');
     vimeoWidget.removeChild(vimeoWidget.firstChild);
     vimeoWidget.appendChild(document.createTextNode("Loading video..."));
     var url = VimeoWidget.buildURL();
@@ -48,7 +48,7 @@ var VimeoWidget =
   // This function puts the video on the page
   embedVideo: function(video)
   {
-    document.getElementById('embed').innerHTML = unescape(video.html);
+    document.getElementById('vimeo__embed').innerHTML = unescape(video.html);
   },
 
   getRandomInt: function(min, max)
