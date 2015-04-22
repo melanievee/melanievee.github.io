@@ -38,6 +38,9 @@ var VimeoWidget =
 
   clickListener: function(event)
   {
+    var vimeoWidget = document.getElementById('embed');
+    vimeoWidget.removeChild(vimeoWidget.firstChild);
+    vimeoWidget.appendChild(document.createTextNode("Loading video..."));
     var url = VimeoWidget.buildURL();
     VimeoWidget.loadVimeoData(url);
   },
