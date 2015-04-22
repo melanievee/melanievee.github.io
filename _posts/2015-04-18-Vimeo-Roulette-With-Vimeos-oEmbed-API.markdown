@@ -19,7 +19,3 @@ Vimeo's [oEmbed API](https://developer.vimeo.com/apis/oembed) is absurdly easy t
 
 To see the project, hop on over to my <a href="{{ site.base_url }}/api/vimeo_roulette" class="standout">Vimeo Roulette</a> page.
 
-There are a few things I'm hoping to add soon:
-
-* A button to "Spin Again", so to speak, and fetch a new random video.
-* Error checking for times when Vimeo is down.
