@@ -4,19 +4,45 @@ var VimeoWidget =
   init: function()
   {
 
-    // Get handlers for key elements & setup clickListener
+    // Get handlers for key elements & set up clickListener
     var videoEmbed = document.getElementById("vimeo__embed");
     var reSpin = document.getElementById("respin");
     $(vimeo__respin).bind("click",VimeoWidget.clickListener);
 
-    // Fetch random Video, build Vimeo URL, and embed Video
-    var url = VimeoWidget.buildURL();
-    VimeoWidget.loadVimeoData(url);
+    VimeoWidget.getRandomVideo();
   },
 
-  buildURL: function()
+  getRandomVideo: function()
   {
-    var videoID = VimeoWidget.getRandomVideoID();
+    var largestID = 200000000;
+    var videoID = VimeoWidget.getRandomInt(1,largestID);
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4)
+      {
+        if (xhr.status === 200)
+        {
+          var url = VimeoWidget.buildURL(videoID);
+          VimeoWidget.loadVimeoData(url);
+        }
+        else
+        {
+          videoID = VimeoWidget.getRandomVideo();
+        }
+      }
+    }
+    xhr.open("HEAD", "https://vimeo.com/api/v2/video/" + videoID + ".json", true);
+    xhr.send();
+  },
+
+  getRandomInt: function(min, max)
+  {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  },
+
+  buildURL: function(videoID)
+  {
     var videoUrl = 'http://www.vimeo.com/' + videoID;
     // This is the JSON oEmbed endpoint for Vimeo
     var endpoint = 'http://www.vimeo.com/api/oembed.json';
@@ -36,44 +62,18 @@ var VimeoWidget =
     document.getElementsByTagName('head').item(0).appendChild(js);
   },
 
-  clickListener: function(event)
-  {
-    var vimeoWidget = document.getElementById('vimeo__embed');
-    vimeoWidget.removeChild(vimeoWidget.firstChild);
-    vimeoWidget.appendChild(document.createTextNode("Loading video..."));
-    var url = VimeoWidget.buildURL();
-    VimeoWidget.loadVimeoData(url);
-  },
-
-  // This function puts the video on the page
   embedVideo: function(video)
   {
     document.getElementById('vimeo__embed').innerHTML = unescape(video.html);
   },
 
-  getRandomInt: function(min, max)
+  clickListener: function(event)
   {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    var vimeoWidget = document.getElementById('vimeo__embed');
+    vimeoWidget.removeChild(vimeoWidget.firstChild);
+    vimeoWidget.appendChild(document.createTextNode("Loading video..."));
+    VimeoWidget.getRandomVideo();
   },
-
-  getRandomVideoID: function()
-  {
-    var largestID = 200000000;
-    var idValid = false;
-
-    while (idValid == false ) {
-      var videoID = VimeoWidget.getRandomInt(1,largestID);
-      var xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          idValid = true;
-        }
-      }
-      xhr.open("HEAD", "https://vimeo.com/api/v2/video/" + videoID + ".json", false);
-      xhr.send();
-    }
-    return videoID;
-  }
 };
 
 VimeoWidget.init();
