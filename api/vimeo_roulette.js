@@ -9,7 +9,13 @@ var VimeoWidget =
     var reSpin = document.getElementById("respin");
     $(respin).bind("click",VimeoWidget.clickListener);
 
-    // Build Vimeo Video URL
+    // Fetch random Video, build Vimeo URL, and embed Video
+    var url = VimeoWidget.buildURL();
+    VimeoWidget.loadVimeoData(url);
+  },
+
+  buildURL: function()
+  {
     var videoID = VimeoWidget.getRandomVideoID();
     var videoUrl = 'http://www.vimeo.com/' + videoID;
     // This is the oEmbed endpoint for Vimeo (we're using JSON)
@@ -19,8 +25,11 @@ var VimeoWidget =
     // Put together the URL
     var url = endpoint + '?url=' + encodeURIComponent(videoUrl) + '&callback=' + callback + '&width=640';
     console.log(url);
+    return url;
+  },
 
-    // Load data from Vimeo
+  loadVimeoData: function(url)
+  {
     var js = document.createElement('script');
     js.setAttribute('type', 'text/javascript');
     js.setAttribute('src', url);
