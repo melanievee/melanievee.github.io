@@ -3,32 +3,35 @@ var VimeoWidget =
 
   init: function()
   {
-
-    // Get handlers for key elements & set up clickListener
-    var videoEmbed = document.getElementById("vimeo__embed");
-    var reSpin = document.getElementById("respin");
     $(vimeo__respin).bind("click",VimeoWidget.clickListener);
 
     VimeoWidget.getRandomVideo();
   },
 
-  getRandomVideo: function()
+  getRandomVideo: function(tryCount)
   {
+    tryCount = tryCount || 0;
     var largestID = 200000000;
     var videoID = VimeoWidget.getRandomInt(1,largestID);
-
     var xhr = new XMLHttpRequest();
+    var retryLimit = 3;
+
     xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4)
-      {
-        if (xhr.status === 200)
-        {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
           var url = VimeoWidget.buildURL(videoID);
           VimeoWidget.loadVimeoData(url);
-        }
-        else
-        {
-          videoID = VimeoWidget.getRandomVideo();
+        } else if (xhr.status === 404) {
+          // Video Not Found, generate new ID
+          videoID = VimeoWidget.getRandomVideo(tryCount);
+        } else {
+          // Limit tries to 3 for all non-404 and non-200 responses.
+          tryCount++;
+          if ( tryCount <= retryLimit ) {
+            videoID = VimeoWidget.getRandomVideo(tryCount);
+          } else {
+            VimeoWidget.problemGettingVideo(tryCount);
+          }
         }
       }
     }
@@ -69,11 +72,21 @@ var VimeoWidget =
 
   clickListener: function(event)
   {
-    var vimeoWidget = document.getElementById('vimeo__embed');
-    vimeoWidget.removeChild(vimeoWidget.firstChild);
-    vimeoWidget.appendChild(document.createTextNode("Loading video..."));
+    VimeoWidget.replaceVideoWithMessage("Loading video...");
     VimeoWidget.getRandomVideo();
   },
+
+  problemGettingVideo: function()
+  {
+    VimeoWidget.replaceVideoWithMessage("We're sorry, there appears to be a problem connecting with Vimeo. Please try again later.");
+  },
+
+  replaceVideoWithMessage: function(message)
+  {
+    var vimeoWidget = document.getElementById('vimeo__embed');
+    vimeoWidget.removeChild(vimeoWidget.firstChild);
+    vimeoWidget.appendChild(document.createTextNode(message));
+  }
 };
 
 VimeoWidget.init();
