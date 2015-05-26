@@ -5,13 +5,15 @@
     <description>I&#39;m a Ruby Developer, runner, and blogger from Seattle, WA. Welcome to my online portfolio of book reviews and software projects.</description>
     <link>http://www.melanievanderlugt.com/</link>
     <atom:link href="http://www.melanievanderlugt.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 25 May 2015 20:34:19 -0700</pubDate>
-    <lastBuildDate>Mon, 25 May 2015 20:34:19 -0700</lastBuildDate>
+    <pubDate>Mon, 25 May 2015 20:52:03 -0700</pubDate>
+    <lastBuildDate>Mon, 25 May 2015 20:52:03 -0700</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
         <title>Coding Challenge: Removing Email Duplicates</title>
-        <description>&lt;h2 id=&quot;the-challenge&quot;&gt;The Challenge&lt;/h2&gt;
+        <description>&lt;p&gt;TL;DR: If you just want to see the solution to this coding challenge, the files are &lt;a href=&quot;https://github.com/melanievee/melanievee.github.io/tree/master/_files/email_duplicates&quot;&gt;available on my Github page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-challenge&quot;&gt;The Challenge&lt;/h2&gt;
 
 &lt;p&gt;I was recently asked to solve the following coding challenge:&lt;/p&gt;
 

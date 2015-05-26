@@ -8,6 +8,8 @@ header-img: "img/cooking.jpg"
 tag:        projects
 ---
 
+TL;DR: If you just want to see the solution to this coding challenge, the files are [available on my Github page](https://github.com/melanievee/melanievee.github.io/tree/master/_files/email_duplicates).
+
 ## The Challenge
 
 I was recently asked to solve the following coding challenge:
