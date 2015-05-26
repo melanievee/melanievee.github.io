@@ -5,9 +5,154 @@
     <description>I&#39;m a Ruby Developer, runner, and blogger from Seattle, WA. Welcome to my online portfolio of book reviews and software projects.</description>
     <link>http://www.melanievanderlugt.com/</link>
     <atom:link href="http://www.melanievanderlugt.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 23 Apr 2015 14:09:36 +0200</pubDate>
-    <lastBuildDate>Thu, 23 Apr 2015 14:09:36 +0200</lastBuildDate>
+    <pubDate>Mon, 25 May 2015 20:34:19 -0700</pubDate>
+    <lastBuildDate>Mon, 25 May 2015 20:34:19 -0700</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
+    
+      <item>
+        <title>Coding Challenge: Removing Email Duplicates</title>
+        <description>&lt;h2 id=&quot;the-challenge&quot;&gt;The Challenge&lt;/h2&gt;
+
+&lt;p&gt;I was recently asked to solve the following coding challenge:&lt;/p&gt;
+
+&lt;p&gt;Write a working function to remove all duplicates from an unsorted list of email addresses. Your resulting list should remain in the original order. Your function should be able to handle around 100,000 email addresses containing 50% randomly placed duplicates in well under 1 second on a typical modern laptop.&lt;/p&gt;
+
+&lt;p&gt;I was allowed to assume any input data structure I wanted (I chose to shove all the emails into an array). I was asked not to use any built-in library functions that make this problem trivial. (That means I can’t use Ruby’s Array#uniq function, darnit!)&lt;/p&gt;
+
+&lt;h2 id=&quot;build-some-tests&quot;&gt;Build Some Tests&lt;/h2&gt;
+
+&lt;p&gt;I generally use RSpec for my Rails Application testing. Lately, however, I’ve been trying to improve my MiniTest skills, so that’s what I chose to use here.&lt;/p&gt;
+
+&lt;p&gt;I put together a really simple MiniTest suite with enough tests to make sure my code is working. First, I wanted to make sure I set up my email list correctly. I wrote tests to verify that my &lt;code&gt;generate_email_list&lt;/code&gt; function generates a list that contains the number of emails I expected, and that half those emails are duplicates.&lt;/p&gt;
+
+&lt;p&gt;Because I’m essentially writing a function that does exactly the same thing Array#uniq does, it’s really easy to write a quick test. I simply make sure that my &lt;code&gt;uniquify&lt;/code&gt; function does the same thing with the email array that &lt;code&gt;Array#uniq&lt;/code&gt; does.&lt;/p&gt;
+
+&lt;p&gt;My simple test suite:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;require&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;minitest/autorun&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;require_relative&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;email_sort&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;EmailsortTest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Minitest&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Test&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test_email_list_setup&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;num_emails&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100_000&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;generate_email_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_emails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;assert_equal&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uniq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;assert_equal&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_emails&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test_uniquify&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;generate_email_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100_000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;assert_equal&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uniq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uniquify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;generate-all-the-emails&quot;&gt;Generate All the Emails&lt;/h2&gt;
+
+&lt;p&gt;Armed with my test suite, I’m ready to get to work. Let’s build that email list.&lt;/p&gt;
+
+&lt;p&gt;It’s trivial to build up an array of unique emails that is half my desired length using a simple loop. After I have that in hand, I multiplied the array by &lt;code&gt;2&lt;/code&gt;. Array multiplication is interesting. Here’s a quick example of what happens when you multiply an array by an integer:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Finally, I use &lt;code&gt;shuffle&lt;/code&gt; to make sure my array elements are in random order. In the end, I have an array on my hands that is made up of 50% duplicates, in random order.&lt;/p&gt;
+
+&lt;p&gt;Here’s the full code to generate the email list, given a specific number of emails:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;generate_email_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_emails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;emails&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.num_emails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;emails&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;user_&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;@example.com&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;emails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shuffle&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;the-meat-of-the-problem-removing-duplicates&quot;&gt;The Meat of the Problem: Removing Duplicates&lt;/h2&gt;
+
+&lt;p&gt;There are multiple ways to solve this problem. I could iterate through each email in my array, then iterate again through the array looking for and eliminating duplicates, but that means I’ll traverse my array N&lt;sup&gt;2&lt;/sup&gt; times for an array of N elements. That’s never good news.&lt;/p&gt;
+
+&lt;p&gt;Enter the Hash. Looking up an element in a Hash is just an O(1) operation; no time wasted traversing an array - the element is there or it’s not. In the &lt;code&gt;uniquify&lt;/code&gt; function below, we iterate through the list of emails, adding the unique ones to the Hash as keys as we go.&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;uniquify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dup_array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;unique_entries&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Hash&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;dup_array&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;each&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;unique_entries&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;unless&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;unique_entries&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;unique_entries&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;keys&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;7&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;After we’ve traversed the original array of emails, we’re left with the Hash of unique emails. Each unique email is a key inside this hash, so we can use the &lt;code&gt;Hash#keys&lt;/code&gt; method to pull those out and return them from the function. (It’s good to note that the &lt;code&gt;Hash#keys&lt;/code&gt; method returns the keys in the order that they were added to the Hash, thus preserving the order of the original email list.)&lt;/p&gt;
+
+&lt;h2 id=&quot;benchmarking---howd-i-do&quot;&gt;Benchmarking - How’d I do?&lt;/h2&gt;
+
+&lt;p&gt;I wanted to make sure my solution processed 100,000 emails in well under 1 second, and I also wanted to see how I stood up to Ruby’s built-in &lt;code&gt;Array#uniq&lt;/code&gt; function, so I set up some benchmarking to measure my code:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Benchmark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bmbm&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;emails&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;generate_email_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100_000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;bm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;report&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;uniquify:&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;unique_emails&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uniquify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;emails&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt;   &lt;span class=&quot;n&quot;&gt;bm&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;report&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;uniq:&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;     &lt;span class=&quot;n&quot;&gt;unique_emails&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;emails&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uniq&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;   &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If you’re not familiar with &lt;code&gt;Benchmark.bmbm&lt;/code&gt;, it’s handy because sometimes garbage collection can skew the results when you call just &lt;code&gt;Benchmark.bm&lt;/code&gt;. With &lt;code&gt;bmbm&lt;/code&gt;, the tests are run twice, once as a “rehearsal” and once “for real”. Ruby’s GC is forced to run after the rehearsal. The idea is that your results will be more accurate this way.&lt;/p&gt;
+
+&lt;p&gt;Here’s the results from benchmarking this solution on my MacBook Air:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Rehearsal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;---------------------------------------------&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;uniquify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;090000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;010000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100000&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;096580&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;uniq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;       &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;060000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;000000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;060000&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;064417&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;------------------------------------&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;total&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;160000&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sec&lt;/span&gt;
+
+                &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;     &lt;span class=&quot;nb&quot;&gt;system&lt;/span&gt;      &lt;span class=&quot;n&quot;&gt;total&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;real&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;uniquify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;060000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;000000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;060000&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;064737&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;uniq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;       &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;060000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;000000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;060000&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;062&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;987&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Not bad! My &lt;code&gt;uniquify&lt;/code&gt; function seems to be holding up against Ruby’s built-in &lt;code&gt;Array#uniq&lt;/code&gt; method.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-struggle-between-space-and-time&quot;&gt;A Struggle Between Space and Time&lt;/h2&gt;
+
+&lt;p&gt;For 1 million emails, this solution takes about 1 second to run:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Rehearsal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;---------------------------------------------&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;uniquify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;270000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;050000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;320000&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;351997&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;uniq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;       &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;540000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;030000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;570000&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;605405&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;------------------------------------&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;total&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;890000&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sec&lt;/span&gt;
+
+                &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;     &lt;span class=&quot;nb&quot;&gt;system&lt;/span&gt;      &lt;span class=&quot;n&quot;&gt;total&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;real&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;uniquify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;050000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;020000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;070000&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;072724&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;uniq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;       &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;130000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;020000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;150000&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;156912&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Once we get up to about 10 million emails in our array, it takes about 32 seconds to remove duplicates, but the Ruby process on my machine starts eating up memory.&lt;/p&gt;
+
+&lt;p&gt;Benchmarking for 10 Million emails:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Rehearsal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;---------------------------------------------&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;uniquify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;010000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;610000&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;620000&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;34&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;354450&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;uniq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;      &lt;span class=&quot;mi&quot;&gt;38&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;600000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;930000&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;39&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;530000&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;525922&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;-----------------------------------&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;total&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;72&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;150000&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sec&lt;/span&gt;
+
+                &lt;span class=&quot;n&quot;&gt;user&lt;/span&gt;     &lt;span class=&quot;nb&quot;&gt;system&lt;/span&gt;      &lt;span class=&quot;n&quot;&gt;total&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;real&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;uniquify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;800000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;390000&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;190000&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;31&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;790559&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;uniq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;      &lt;span class=&quot;mi&quot;&gt;36&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mo&quot;&gt;070000&lt;/span&gt;   &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;460000&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;36&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;530000&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;37&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;216896&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;For 10 million emails, the Ruby process maxes out at about 1.3 GB of memory. I only have 4 GB of memory on my machine, so processing a billion emails using my uniquify function is not going to be good news.&lt;/p&gt;
+
+&lt;p&gt;For anything over 10 million emails, I’d consider eliminating the hash altogether. It might even be a good idea to try moving back to the N&lt;sup&gt;2&lt;/sup&gt; solution, where we would iterate through the array one email at a time, then iterate over the remaining elements in the array to remove duplicates. This solution would unquestionably take &lt;strong&gt;much&lt;/strong&gt; longer than the Hash method, but we’d be storing a lot less data in memory.&lt;/p&gt;
+
+&lt;p&gt;If I could just get my hands on a computer with a huge amount of Memory, life would sure be easy wouldn’t it?&lt;/p&gt;
+</description>
+        <pubDate>Sat, 23 May 2015 12:00:00 -0700</pubDate>
+        <link>http://www.melanievanderlugt.com/2015/05/23/email-filter-challenge/</link>
+        <guid isPermaLink="true">http://www.melanievanderlugt.com/2015/05/23/email-filter-challenge/</guid>
+        
+        <category>projects</category>
+        
+        
+      </item>
     
       <item>
         <title>Pomatillo</title>
@@ -32,7 +177,7 @@
 
 &lt;p class=&quot;centered&quot;&gt;&lt;img src=&quot;/img/pomatillo/pomatillo_report.png&quot; alt=&quot;Pomatillo reports page&quot; /&gt;&lt;/p&gt;
 </description>
-        <pubDate>Sun, 19 Apr 2015 16:33:00 +0200</pubDate>
+        <pubDate>Sun, 19 Apr 2015 07:33:00 -0700</pubDate>
         <link>http://www.melanievanderlugt.com/2015/04/19/pomatillo/</link>
         <guid isPermaLink="true">http://www.melanievanderlugt.com/2015/04/19/pomatillo/</guid>
         
@@ -54,11 +199,195 @@
 &lt;p&gt;To see the project, hop on over to my &lt;a href=&quot;/api/vimeo_roulette&quot; class=&quot;standout&quot;&gt;Vimeo Roulette&lt;/a&gt; page.&lt;/p&gt;
 
 </description>
-        <pubDate>Sat, 18 Apr 2015 19:45:00 +0200</pubDate>
+        <pubDate>Sat, 18 Apr 2015 10:45:00 -0700</pubDate>
         <link>http://www.melanievanderlugt.com/2015/04/18/Vimeo-Roulette-With-Vimeos-oEmbed-API/</link>
         <guid isPermaLink="true">http://www.melanievanderlugt.com/2015/04/18/Vimeo-Roulette-With-Vimeos-oEmbed-API/</guid>
         
         <category>projects</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Book Review: Metaprogramming Ruby</title>
+        <description>&lt;p&gt;Metaprogramming Ruby by Paolo Perrotta, published 2010. Recommended to Kevin by a teacher in his code class for people who consider themselves “intermediat Ruby devs”.&lt;/p&gt;
+
+&lt;p&gt;“Ruby trusts you. Ruby treats you as a grown-up programmer. It gives you great power such as metaprogramming. But you need to remember that with great power comes great responsibility.”
+    -matz, from the Forward of &lt;em&gt;Metaprogramming Ruby&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Metaprogramming can be thought of as code that writes other code. In this book, Paolo defines it as “writing code that manipulates language constructs at runtime.”&lt;/p&gt;
+
+&lt;p&gt;Objects hold their own instance variables, but an Object’s Class holds its methods.&lt;/p&gt;
+
+&lt;p&gt;Method Lookup: (duplicate drawing from Loc 928)
+Modules - when you include a module, Ruby creates an “anonymous” class that is places around that Module, then sticks that into the chain right above the class where you called include. What if multiple modules are called? Use the example in 1.6 Quiz (loc 1045) as a guide. Create a couple modules - maybe use colors? Call one Module correct colors, and one incorrect colors. Make a confusing call stack and create an example where including the modules in the correct order would fix the problem. OR, create an example where you have two modules with render_user and one has middle name and one doesn’t. That’s better.&lt;/p&gt;
+
+&lt;p&gt;Private Methods:
+You can’t call a private method without an explicit receiver. What does this mean? If the method isn’t found somewhere in the method lookup chain (meaning that it must be an ancestor or module that was included), then you can’t call it.&lt;/p&gt;
+
+&lt;p&gt;Creating Methods on the Fly&lt;/p&gt;
+
+&lt;p&gt;Dynamic Methods with obj.send(:some_method, 3) or with define_method (loc 1352).
+Use introspection to automate thing even further. For example, if you find yourself looking at a list of items and typing them into your program, stop and figure out how to import those automatically. Then if the list changes in the future, your script doesn’t have to be changed manually. It automagically grabs whatever new list items may be there.&lt;/p&gt;
+
+&lt;p&gt;Method Missing:
+You know that pesky “NoMethodError” message you get if you call a method that doesn’t exist? Magic happens when you play around with your Object’s method_missing method. You can override it and cause great things to happen if someone calls a method that doesn’t exist for your Object. You can create methods dynamically using method_missing, which can help you prevent massive amounts of duplication in your code.  ??Link to someone else’s blog post with a good writeup on Method Missing??? One gotcha - methods created using method_missing will not respond to respond_to? as you’d expect. You have to override respond_to? when you override method_missing if you don’t want it to lie. (see loc 1857 - don’t forget to call Super). Also be sure method_missing calls super. It’s important to make sure that a method doesn’t exist if you’re falling back on method_missing. If your object inherits a method from somewhere, that method will win and your method_missing won’t be called. You an get around this by undefining these conflicting methods, creating a BlankSlate object. Try inheriting from BasicObject instead of Object, perhaps? This wasn’t in the book but would be interesting to play with.&lt;/p&gt;
+
+&lt;p&gt;Use of Blocks as Closures to flatten the scope. Look at Loc 2485 for the good example. This helps you get around scope gates (class, module, and def). Wrap-up on Loc 2567 summarizes things well.&lt;/p&gt;
+
+&lt;p&gt;Use instance_eval and instance_exec to break encapsulation. This is usually a bad idea, but can be helpful for testing. It sort of lets you violate the boundaries of your object, breaking into its scope.&lt;/p&gt;
+
+&lt;p&gt;EXTEND AND EIGENCLASSES
+What in the world does “Extend” do? To understand what extend mymodule does to a class or object, you first have to understand the concept of an eigenclass or metaclass. The eigenclass of a Class is where class methods live. The eigenclass of an object is the place where singleton methods on that object live.&lt;/p&gt;
+
+&lt;p&gt;For example, if you had this code:
+class MyClass
+  def self.my_method
+    “Hello World”
+  end
+end&lt;/p&gt;
+
+&lt;p&gt;Then my_method lives in MyClass’s eigenclass. Another way to add methods into an object’s eigenclass is like this:
+class MyClass
+  class « self
+    def my_method
+      “Hello World”
+    end
+  end
+end&lt;/p&gt;
+
+&lt;p&gt;Both of these previous examples add the class method “my_method” to MyClass, and this class method lives in MyClass’s eigenclass.&lt;/p&gt;
+
+&lt;p&gt;Before learning about eigenclasses, I always was confused about the difference between include and extend. With the concept of eigenclasses firmly cemented in my brain, this got a lot easier.&lt;/p&gt;
+
+&lt;p&gt;Let’s talk about the use of “include”. Say I have a module:
+module MyModule
+  def self.my_method
+    “Hello World”
+  end
+end&lt;/p&gt;
+
+&lt;p&gt;And I have a class, where I want my_method to be available as a class method:
+class MyClass
+  include MyModule
+end&lt;/p&gt;
+
+&lt;p&gt;This doesn’t work! If you try to call &lt;code&gt;MyClass.my_method&lt;/code&gt;, you’ll be met with a &lt;code&gt;NoMethodError&lt;/code&gt;!&lt;/p&gt;
+
+&lt;p&gt;Remembering what I noted above, that class methods live in a class’s eigenclass, I could do something like this:
+class MyClass
+  class « self
+    include MyModule
+  end
+end&lt;/p&gt;
+
+&lt;p&gt;Now when we call &lt;code&gt;MyClass.my_method&lt;/code&gt;, we’re greeted with a cheerful &lt;code&gt;Hello World&lt;/code&gt;. Fantastic. But there’s an even more clear, concise way of including MyModule in MyClass’s eigenclass. Enter &lt;code&gt;extend&lt;/code&gt;!&lt;/p&gt;
+
+&lt;p&gt;class MyClass
+  extend MyModule
+end&lt;/p&gt;
+
+&lt;p&gt;It turns out that using &lt;code&gt;extend&lt;/code&gt; simply includes a module into that object’s eigenclass. So again, MyClass.my_method will return &lt;code&gt;Hello World&lt;/code&gt;. That was sure easy!&lt;/p&gt;
+
+&lt;p&gt;What in the world is an “Around Alias”&lt;/p&gt;
+
+&lt;p&gt;In Ruby, it’s possible to define an alias for a method, like this:&lt;/p&gt;
+
+&lt;p&gt;class MyClass
+  def myMethod
+    “Hello World!”
+  end
+  alias :aliasMethod :myMethod
+end&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;greeting = MyClass.new
+greeting.myMethod
+ =&amp;gt; “Hello World!”
+greeting.aliasMethod
+ =&amp;gt; “Hello World!”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Using myMethod and aliasMethod both point to the same thing. What happens to aliasMethod if we re-open MyClass and alter myMethod like this?&lt;/p&gt;
+
+&lt;p&gt;class MyClass
+  def myMethod
+    “Goodbye World”
+  end
+end&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;greeting.myMethod
+ =&amp;gt; “Goodbye World”
+greeting.aliasMethod
+ =&amp;gt; “Hello World!”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;What is happening here? It turns out that aliasMethod still refers to the original method. This is a very important thing to learn, because it means that we can create copies of methods using alias, then override the method while still keeping a hold of the original method! That sounds really confusing, so let’s clear it up with an example.&lt;/p&gt;
+
+&lt;p&gt;Let’s say you want to play a prank on a coworker, and override the String#+ method so that it adds “LOL” in between any strings they choose to combine using &lt;code&gt;+&lt;/code&gt;. We’re seeking this behavior:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“Hello” « ” there”
+ =&amp;gt; “Hello LOL there”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;You might be tempted to just override &lt;code&gt;&amp;lt;&amp;lt;&lt;/code&gt; like this:&lt;/p&gt;
+
+&lt;p&gt;class String
+  def «(stringy)
+    self « ” LOL” « stringy
+  end
+end&lt;/p&gt;
+
+&lt;p&gt;But if you do that, you’ll be met with a nasty error. This is because the new method we’re defining uses itself to produce output, which creates a circular dependency. Somehow, we need to keep a hold of the original &lt;code&gt;&amp;lt;&amp;lt;&lt;/code&gt; method. This is where Around Aliases come in! We create an alias for the original &lt;code&gt;&amp;lt;&amp;lt;&lt;/code&gt; method, and use it to do the heavy lifting for us, like this:&lt;/p&gt;
+
+&lt;p&gt;class String
+  alias :old_shovel :«
+  def «(stringy)
+    self.old_shovel(“ LOL”).old_shovel(stringy)
+  end
+end&lt;/p&gt;
+
+&lt;p&gt;Does it work? Let’s check:
+&amp;gt; “Hello” « ” there”
+ =&amp;gt; “Hello LOL there”&lt;/p&gt;
+
+&lt;p&gt;This is hardly a practical method, but it gives you an idea of how you can use Around Aliases to avoid creating circular dependencies when you’re overriding methods.&lt;/p&gt;
+
+&lt;p&gt;Hook Methods in Ruby&lt;/p&gt;
+
+&lt;p&gt;Class#inherited and Module#included are great tools to use if you want to perform some action when your Class is inherited from, or when someone includes your Module.&lt;/p&gt;
+
+&lt;p&gt;What in the world would you use these for? One clever use in particular is if you’re creating a Module that you know you’ll ALWAYS want to include in a Class’s Eigenclass. In normal human language speak, if you want the methods in your module to be Class Methods and not Instance Methods, you can do something like this:&lt;/p&gt;
+
+&lt;p&gt;```ruby
+module AddClassMethods
+  def self.included(base)
+    base.extend(ClassMethods)
+  end&lt;/p&gt;
+
+&lt;p&gt;module ClassMethods
+    def method1
+      “Method 1 Ran!”
+    end
+  end
+end&lt;/p&gt;
+
+&lt;p&gt;class MyClass
+  include AddClassMethods
+end&lt;/p&gt;
+
+&lt;p&gt;puts MyClass.method1
+=&amp;gt; “Method 1 Ran!”
+```&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 12 Mar 2015 14:45:00 -0700</pubDate>
+        <link>http://www.melanievanderlugt.com/2015/03/12/book-review-metaprogramming-ruby/</link>
+        <guid isPermaLink="true">http://www.melanievanderlugt.com/2015/03/12/book-review-metaprogramming-ruby/</guid>
+        
+        <category>book-review</category>
         
         
       </item>
@@ -187,7 +516,7 @@ Original failure: #&amp;lt;RuntimeError: Error A&amp;gt;
 
 &lt;p&gt;The user can provide any number of code blocks to handle errors in this situation. What’s truly important is that the power lies with the caller, not with the method author.&lt;/p&gt;
 </description>
-        <pubDate>Thu, 12 Mar 2015 15:45:00 +0100</pubDate>
+        <pubDate>Thu, 12 Mar 2015 07:45:00 -0700</pubDate>
         <link>http://www.melanievanderlugt.com/2015/03/12/book-review-exceptional-ruby/</link>
         <guid isPermaLink="true">http://www.melanievanderlugt.com/2015/03/12/book-review-exceptional-ruby/</guid>
         
@@ -206,11 +535,32 @@ Original failure: #&amp;lt;RuntimeError: Error A&amp;gt;
 
 &lt;p&gt;The added bonus? Read this book and you’ll finally learn how Airbnb picked their name!&lt;/p&gt;
 </description>
-        <pubDate>Mon, 23 Feb 2015 13:00:00 +0100</pubDate>
+        <pubDate>Mon, 23 Feb 2015 04:00:00 -0800</pubDate>
         <link>http://www.melanievanderlugt.com/2015/02/23/book-review-growth-hacker-marketing/</link>
         <guid isPermaLink="true">http://www.melanievanderlugt.com/2015/02/23/book-review-growth-hacker-marketing/</guid>
         
         <category>book-review</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>My Github Pages Site is Born! Hello World.</title>
+        <description>Step 1: Get a Github account
+Step 2: Set up Github Pages https://pages.github.com/
+Step 3: Call out the correct version of Ruby. I opted to use Ruby 2.0.0 by typing rvm use 2.0.0. At the time I wrote this blog post, it&#39;s ok to use 1.9.3 or 2.0.0 according to https://help.github.com/articles/using-jekyll-with-pages/ . Follow the instructions https://help.github.com/articles/using-jekyll-with-pages/ here to be sure you get everything set up correctly. It can be good to specify your Ruby version in your Gemfile too, so if your RVM settings ever get out of whack, you&#39;ll be ok. Here&#39;s my Gemfile contents:
+
+source &#39;https://rubygems.org&#39;
+ruby &#39;2.0.0&#39; 
+
+gem &#39;github-pages&#39;
+
+Step 4: If you followed the Github pages instructions in step 2 correctly, you already have a page at githubusername.github.io that says &quot;Hello World&quot;. Let&#39;s try getting that up and running on your local machine. To do that, simply type &quot;jekyll serve&quot; in your terminal. ctrl-c stops the server. This is how you can use Jekyll to preview your website before pushing it up to Github!
+
+</description>
+        <pubDate>Mon, 02 Feb 2015 12:07:35 -0800</pubDate>
+        <link>http://www.melanievanderlugt.com/2015/02/02/hello-world-a-github-pages-site-is-born/</link>
+        <guid isPermaLink="true">http://www.melanievanderlugt.com/2015/02/02/hello-world-a-github-pages-site-is-born/</guid>
         
         
       </item>
@@ -289,7 +639,7 @@ Original failure: #&amp;lt;RuntimeError: Error A&amp;gt;
 &lt;h3 id=&quot;the-verdict-a-must-read&quot;&gt;The Verdict: A Must Read&lt;/h3&gt;
 &lt;p&gt;If you’re a Rubyist and haven’t had a look at this book yet, I highly recommend giving it a read. It’s quick to get through, easy to absorb, and definitely deserves a spot on your shelf of code references. Plus, it contains emergency kittens. Perfect for times when those coding examples become a little bit too intense and you just need a chuckle.&lt;/p&gt;
 </description>
-        <pubDate>Mon, 02 Feb 2015 13:00:00 +0100</pubDate>
+        <pubDate>Mon, 02 Feb 2015 04:00:00 -0800</pubDate>
         <link>http://www.melanievanderlugt.com/2015/02/02/book-review-confident-ruby/</link>
         <guid isPermaLink="true">http://www.melanievanderlugt.com/2015/02/02/book-review-confident-ruby/</guid>
         
@@ -302,7 +652,7 @@ Original failure: #&amp;lt;RuntimeError: Error A&amp;gt;
         <title>Oh Hey There, World.</title>
         <description>&lt;p&gt;Welcome to my online portfolio! I&#39;ll be posting book reviews, snippets about my work with various APIs, and writeups of various Rails side projects I&#39;ve been working on.&lt;/p&gt;
 </description>
-        <pubDate>Tue, 20 Jan 2015 20:30:00 +0100</pubDate>
+        <pubDate>Tue, 20 Jan 2015 11:30:00 -0800</pubDate>
         <link>http://www.melanievanderlugt.com/2015/01/20/a-blog-is-born/</link>
         <guid isPermaLink="true">http://www.melanievanderlugt.com/2015/01/20/a-blog-is-born/</guid>
         
